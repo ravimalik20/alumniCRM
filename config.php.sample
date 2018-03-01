@@ -1,0 +1,6 @@
+<?php
+	$db_host = 'localhost';
+	$db_name = 'alumnislim';
+	$db_user = 'alumnislim';
+	$db_pass = 'alumnislim';
+?>

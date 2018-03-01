@@ -10,14 +10,16 @@ require_once 'vendor/j4mie/idiorm/idiorm.php';
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
-$hostname = $config['db']['host']   = 'localhost';
-$dbuser = $config['db']['user']   = 'alumnislim';
-$dbpass = $config['db']['pass']   = 'alumnislim';
-$dbname = $config['db']['dbname'] = 'alumnislim';
+include('config.php');
 
-ORM::configure("mysql:host=$hostname;dbname=$dbname");
-ORM::configure('username', $dbuser);
-ORM::configure('password', $dbpass);
+$hostname = $config['db']['host']   = $db_host;
+$dbuser = $config['db']['user']   = $db_user;
+$dbpass = $config['db']['pass']   = $db_pass;
+$dbname = $config['db']['dbname'] = $db_name;
+
+ORM::configure("mysql:host=$db_host;dbname=$db_name");
+ORM::configure('username', $db_user);
+ORM::configure('password', $db_pass);
 
 $app = new \Slim\App(['settings' => $config]);
 
