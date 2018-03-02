@@ -4,7 +4,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
-require_once 'vendor/j4mie/idiorm/idiorm.php';
 
 /* DB Configuration */
 $config['displayErrorDetails'] = true;
@@ -17,9 +16,8 @@ $dbuser = $config['db']['user']   = $db_user;
 $dbpass = $config['db']['pass']   = $db_pass;
 $dbname = $config['db']['dbname'] = $db_name;
 
-ORM::configure("mysql:host=$db_host;dbname=$db_name");
-ORM::configure('username', $db_user);
-ORM::configure('password', $db_pass);
+// Create connection
+
 
 $app = new \Slim\App(['settings' => $config]);
 
@@ -33,23 +31,19 @@ $container['logger'] = function($c) {
     return $logger;
 };
 
-$container['view'] = new \Slim\Views\PhpRenderer('templates/');
-
-$container['DashboardController'] = function($c) {
-    $view = $c->get("view"); // retrieve the 'view' from the container
-    return new DashboardController($view);
+$container['db'] = function($c) use($db_host, $db_pass, $db_user, $db_name) {
+	$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+    
+    if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+    
+    return $conn;
 };
 
+$container['view'] = new \Slim\Views\PhpRenderer('templates/');
 
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-
-	$this->logger->addInfo('Something interesting happened');
-
-	$response = $this->view->render($response, 'hello.phtml', ['name' => $name]);
-
-    return $response;
-});
+/* Routes */
 
 $app->get('/', function (Request $request, Response $response, array $args) {
 	$response = $this->view->render($response, 'home.phtml');
@@ -57,12 +51,52 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 	return $response;
 });
 
-$app->get('/name', function (Request $request, Response $response, array $args) {
-	$person = ORM::for_table('test')->where('name', 'ravi')->find_one();
+$app->group('/api/v1/', function () {
+	$this->post('login', function (Request $request, Response $response, array $args) {
+		$data = $request->getParsedBody();
+		
+		$email = filter_var($data['email'], FILTER_SANITIZE_STRING);
+		$password = filter_var($data['password'], FILTER_SANITIZE_STRING);
+		
+		$valid = false;
+		$obj = $this->db->query("select * from users where email = '$email'");
+		
+		if ($obj->num_rows > 0) {
+			$obj = $obj->fetch_assoc();
+			
+			if (password_verify($password, $obj['password'])) {
+				$valid = true;
+			}
+		}
+		
+		if ($valid == true) {
+			$token = bin2hex(random_bytes(30));
+			
+			$stmt = $this->db
+				->query("UPDATE users set login_token='$token', last_login=CURRENT_TIMESTAMP() where id_admin_user=".$obj["id_admin_user"]);
+			
+			$result = array(
+				"result" => "success",
+				"token" => $token
+			);
+			
+			return $response->withJson($result, 200);
+		}
+		
+		$result = array(
+			"result" => "failure"
+		);
+		
+		return $response->withJson($result, 400);
+	});
+});
+
+$app->get('/pwd/{str}', function (Request $request, Response $response, array $args) {
+	$str = $args['str'];
 	
-	$name = $person->name;
+	$pwd_str = password_hash($str, PASSWORD_DEFAULT);
 	
-	$response = $this->view->render($response, 'hello.phtml', ["name" => $name]);
+	echo($pwd_str);
 });
 
 $app->run();
