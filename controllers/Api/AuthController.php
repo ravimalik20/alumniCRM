@@ -15,8 +15,8 @@ class AuthController
     {
 		$data = $request->getParsedBody();
 		
-		$email = filter_var($data['email'], FILTER_SANITIZE_STRING);
-		$password = filter_var($data['password'], FILTER_SANITIZE_STRING);
+		$email = $this->test_input($data['email']);
+		$password = $this->test_input($data['password']);
 		
 		$valid = false;
 		$obj = $this->app->db->query("select * from users where email = '$email'");
@@ -30,7 +30,7 @@ class AuthController
 		}
 		
 		if ($valid == true) {
-			$token = bin2hex(random_bytes(30));
+			$token = $this->generateRandomString(64);
 			
 			$stmt = $this->app->db
 				->query("UPDATE users set login_token='$token', last_login=CURRENT_TIMESTAMP() where id_admin_user=".$obj["id_admin_user"]);
@@ -54,10 +54,10 @@ class AuthController
     {
 		$data = $request->getParsedBody();
 		
-		$name = filter_var($data['name'], FILTER_SANITIZE_STRING);
-		$email = filter_var($data['email'], FILTER_SANITIZE_STRING);
-		$password = filter_var($data['password'], FILTER_SANITIZE_STRING);
-		$password_re = filter_var($data['password_re'], FILTER_SANITIZE_STRING);
+		$name = $this->test_input($data['name']);
+		$email = $this->test_input($data['email']);
+		$password = $this->test_input($data['password']);
+		$password_re = $this->test_input($data['password_re']);
 		
 		$errors = array();
 		
@@ -98,6 +98,24 @@ class AuthController
 		
 		return $response->withJson($result, 200);
     }
+    
+    public function test_input($data) {
+	  $data = trim($data);
+	  $data = stripslashes($data);
+	  $data = htmlspecialchars($data);
+	  
+	  return $data;
+	}
+	
+	public function generateRandomString($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
 }
 
 ?>
