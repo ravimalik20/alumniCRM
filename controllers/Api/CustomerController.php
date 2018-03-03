@@ -20,6 +20,62 @@ class CustomerController
     {
 		$data = $request->getParsedBody();
 		
+		return $this->insert_update($response, $data, null);
+    }
+    
+    public function get($request, $response, $args)
+    {
+		$id = $args['id'];
+		
+		$sql = "SELECT * FROM customer where id_customer = $id";
+		$obj = $this->app->db->query($sql); 
+		
+		if ($obj->num_rows > 0) {
+			$obj = $obj->fetch_assoc();
+			$email = $obj["email"];
+		
+			$sql = "SELECT * FROM customer where email = '$email' order by version_num_customer desc limit 1";
+			$obj = $this->app->db->query($sql);
+		
+			$result = $obj->fetch_assoc();
+			
+			return $response->withJson($result, 200);
+		}
+		else {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Does not exist.")
+			);
+			
+			return $response->withJson($result, 404);
+		}
+    }
+    
+    public function update($request, $response, $args)
+    {
+		$id = $args['id'];
+		$data = $request->getParsedBody();
+		
+		return $this->insert_update($response, $data, $id);
+    }
+
+	private function insert_update($response, $data, $id)
+	{
+		if ($id != null) {
+			$prev_obj = $this->app->db->query("select * from customer where id_customer=$id");
+			
+			if ($prev_obj->num_rows <= 0) {
+				$result = array(
+					"status" => "failure",
+					"errors" => array("Does not exist.")
+				);
+				
+				return $response->withJson($result, 404);
+			}
+			
+			$prev_obj = $prev_obj->fetch_assoc();
+		}
+	
 		$first_name = $this->test_input($data['first_name']);
 		$last_name = $this->test_input($data['last_name']);
 		$type = $this->test_input($data['type']); //
@@ -128,6 +184,14 @@ class CustomerController
 		if ($major_year_end <= $major_year_start) {
 			array_push($errors, "major_year_end should be greater than major_year_start");
 		}
+
+		/* Increment version number on update. */
+		if ($id != null) {
+			$version = $prev_obj["version_num_customer"] + 1;
+		}
+		else {
+			$version = 0;
+		}
 		
 		if (count($errors) > 0) {
 			$result = array(
@@ -143,7 +207,7 @@ class CustomerController
 			" school, degree, major, major_year_start, major_year_end, version_num_customer)".
 			" VALUES ('$first_name', '$last_name', '$preferred_mail_name', '$salutation', '$home_street_1',".
 			"'$home_street_2', '$country', '$city', '$state', '$zipcode', '$home_number', '$phone_number', '$email', '$gender',".
-			"'$birthday', '$school', '$degree', '$major', '$major_year_start', '$major_year_end', '0'".
+			"'$birthday', '$school', '$degree', '$major', '$major_year_start', '$major_year_end', '$version'".
 			")";
 
 		$status = $this->app->db->query($sql);
@@ -162,34 +226,7 @@ class CustomerController
 		
 			return $response->withJSON($result, 500);
 		}
-    }
-    
-    public function get($request, $response, $args)
-    {
-		$id = $args['id'];
-		
-		$sql = "SELECT * FROM customer where id_customer = $id";
-		$obj = $this->app->db->query($sql);
-		
-		if ($obj->num_rows > 0) {
-			$result = $obj->fetch_assoc();
-			
-			return $response->withJson($result, 200);
-		}
-		else {
-			$result = array(
-				"status" => "failure",
-				"errors" => array("Does not exist.")
-			);
-			
-			return $response->withJson($result, 404);
-		}
-    }
-    
-    public function update($request, $response, $args)
-    {
-		
-    }
+	}
     
     private function test_input($data)
     {
