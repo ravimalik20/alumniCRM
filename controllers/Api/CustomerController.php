@@ -166,7 +166,24 @@ class CustomerController
     
     public function get($request, $response, $args)
     {
+		$id = $args['id'];
 		
+		$sql = "SELECT * FROM customer where id_customer = $id";
+		$obj = $this->app->db->query($sql);
+		
+		if ($obj->num_rows > 0) {
+			$result = $obj->fetch_assoc();
+			
+			return $response->withJson($result, 200);
+		}
+		else {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Does not exist.")
+			);
+			
+			return $response->withJson($result, 404);
+		}
     }
     
     public function update($request, $response, $args)
