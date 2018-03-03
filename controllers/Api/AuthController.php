@@ -49,6 +49,55 @@ class AuthController
 		
 		return $response->withJson($result, 400);
     }
+    
+    public function register($request, $response, $args)
+    {
+		$data = $request->getParsedBody();
+		
+		$name = filter_var($data['name'], FILTER_SANITIZE_STRING);
+		$email = filter_var($data['email'], FILTER_SANITIZE_STRING);
+		$password = filter_var($data['password'], FILTER_SANITIZE_STRING);
+		$password_re = filter_var($data['password_re'], FILTER_SANITIZE_STRING);
+		
+		$errors = array();
+		
+		$exists = $this->app->db->query("select * from users where email = '$email'");
+		if ($exists->num_rows > 0)
+			array_push($errors, "Email already exists.");
+		
+		if (strcmp($password, $password_re) != 0) {
+			array_push($errors, "Password and repeat password do not match.");
+		}
+		
+		if (count($errors) > 0) {
+			$result = array(
+				"status" => "failure",
+				"errors" => $errors
+			);
+			
+			return $response->withJson($result, 400);
+		}
+		
+		$password = password_hash($password, PASSWORD_DEFAULT);
+		
+		$this->app->db->query("INSERT INTO users(name, email, password, active) values('$name', '$email', '$password', 1)");
+		$user_obj = $this->app->db->query("SELECT email from users where email = '$email'");
+		
+		if ($user_obj->num_rows <= 0) {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Internal server error.")
+			);
+		
+			return $response->withJSON($result, 500);
+		}
+		
+		$result = array(
+			"status" => "success"
+		);
+		
+		return $response->withJson($result, 200);
+    }
 }
 
 ?>

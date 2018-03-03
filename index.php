@@ -23,6 +23,8 @@ $app = new \Slim\App(['settings' => $config]);
 
 $container = $app->getContainer();
 
+/* Dependencies */
+
 /* Register logger to container via. dependency injection. */
 $container['logger'] = function($c) {
     $logger = new \Monolog\Logger('my_logger');
@@ -55,15 +57,11 @@ $app->get('/dashboard', DashboardController::class . ':home');
 
 $app->group('/api/v1/', function () {
 	$this->post('login', \Api\AuthController::class . ':login');
+	$this->post('register', \Api\AuthController::class . ':register');
 });
 
-$app->get('/pwd/{str}', function (Request $request, Response $response, array $args) {
-	$str = $args['str'];
-	
-	$pwd_str = password_hash($str, PASSWORD_DEFAULT);
-	
-	echo($pwd_str);
-});
+
+/* Launch */
 
 $app->run();
 
