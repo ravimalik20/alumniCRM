@@ -58,6 +58,13 @@ $app->get('/dashboard', DashboardController::class . ':home');
 $app->group('/api/v1/', function () {
 	$this->post('login', \Api\AuthController::class . ':login');
 	$this->post('register', \Api\AuthController::class . ':register');
+	
+	$this->group('customer', function () {
+		$this->get('', \Api\CustomerController::class . ':search');
+		$this->post('', \Api\CustomerController::class . ':create');
+		$this->get('/{id}', \Api\CustomerController::class . ':get');
+		$this->post('/{id}', \Api\CustomerController::class . ':update');
+	});
 });
 
 

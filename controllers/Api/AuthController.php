@@ -99,7 +99,7 @@ class AuthController
 		return $response->withJson($result, 200);
     }
     
-    public function test_input($data) {
+    private function test_input($data) {
 	  $data = trim($data);
 	  $data = stripslashes($data);
 	  $data = htmlspecialchars($data);
@@ -107,7 +107,7 @@ class AuthController
 	  return $data;
 	}
 	
-	public function generateRandomString($length = 10) {
+	private function generateRandomString($length = 10) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
 		$randomString = '';
