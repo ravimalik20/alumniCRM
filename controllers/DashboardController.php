@@ -2,14 +2,15 @@
 
 class DashboardController
 {
-    protected $view;
+    protected $app;
 
-    public function __construct(\Slim\Views\PhpRenderer $view) {
-        $this->view = $view;
+    public function __construct(\Slim\Container $container) {
+        $this->app = $container;
     }
+    
     public function home($request, $response, $args) {
       
-      $response = $this->view->render($response, 'dashboard.phtml');
+      $response = $this->app->view->render($response, 'dashboard.phtml');
       
       return $response;
     }
