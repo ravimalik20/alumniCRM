@@ -55,6 +55,11 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 $app->get('/dashboard', DashboardController::class . ':home');
 
+$app->group('/auth/', function () {
+	$this->get('login', AuthController::class . ':login');
+	$this->get('register', AuthController::class . ':register');
+});
+
 $app->group('/api/v1/', function () {
 	$this->post('login', \Api\AuthController::class . ':login');
 	$this->post('register', \Api\AuthController::class . ':register');

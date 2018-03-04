@@ -47,7 +47,7 @@ class AuthController
 			"result" => "failure"
 		);
 		
-		return $response->withJson($result, 400);
+		return $response->withJson($result, 200);
     }
     
     public function register($request, $response, $args)
