@@ -55,9 +55,15 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 $app->get('/dashboard', DashboardController::class . ':home');
 
-$app->group('/auth/', function () {
-	$this->get('login', AuthController::class . ':login');
-	$this->get('register', AuthController::class . ':register');
+$app->group('/auth', function () {
+	$this->get('/login', AuthController::class . ':login');
+	$this->get('/register', AuthController::class . ':register');
+});
+
+$app->group('/alumni', function () {
+	$this->get('', AlumniController::class . ':home');
+	$this->get('/create', AlumniController::class . ':create');
+	$this->get('/{id}', AlumniController::class . ':get');
 });
 
 $app->group('/api/v1/', function () {
