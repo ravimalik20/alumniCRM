@@ -47,6 +47,10 @@ $container['db'] = function($c) use($db_host, $db_pass, $db_user, $db_name) {
 
 $container['view'] = new \Slim\Views\PhpRenderer('templates/');
 
+$container['app_hostname'] = function($c) use ($app_hostname) {
+	return $app_hostname;
+};
+
 /* Routes */
 
 $app->get('/', function (Request $request, Response $response, array $args) {

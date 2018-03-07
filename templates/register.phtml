@@ -19,7 +19,7 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <link href="/media/css/login.css" rel="stylesheet">
+    <link href="<?=Helper::url('/media/css/login.css')?>" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,7 +27,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script src="/media/js/register.js"></script>
+    <script src="<?=Helper::url('/media/js/register.js')?>"></script>
     
     <style>
 		body{
@@ -55,7 +55,7 @@
 			    		<h3 class="panel-title">Create a new administrator account.</h3>
 			 			</div>
 			 			<div class="panel-body">
-			    		<form role="form" action="/api/v1/register" method="POST">
+			    		<form role="form" action="<?=Helper::url('/api/v1/register')?>" method="POST">
 			    			<div class="row">
 			    				<div class="col-xs-12 col-sm-12 col-md-12">
 			    					<div class="form-group">
