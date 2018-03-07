@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -68,6 +70,7 @@ $app->group('/alumni', function () {
 
 $app->group('/api/v1/', function () {
 	$this->post('login', \Api\AuthController::class . ':login');
+	$this->get('logout', \Api\AuthController::class . ':logout');
 	$this->post('register', \Api\AuthController::class . ':register');
 	
 	$this->group('customer', function () {

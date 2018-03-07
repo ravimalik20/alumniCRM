@@ -35,6 +35,8 @@ class AuthController
 			$stmt = $this->app->db
 				->query("UPDATE users set login_token='$token', last_login=CURRENT_TIMESTAMP() where id_admin_user=".$obj["id_admin_user"]);
 			
+			$_SESSION["auth_token"] = $token;
+			
 			$result = array(
 				"result" => "success",
 				"token" => $token
@@ -49,6 +51,19 @@ class AuthController
 		
 		return $response->withJson($result, 200);
     }
+
+	public function logout($request, $response, $args)
+	{
+		session_unset();
+		
+		session_destroy();
+		
+		$result = array(
+			"result" => "success"
+		);
+		
+		return $response->withJson($result, 200);
+	}
     
     public function register($request, $response, $args)
     {

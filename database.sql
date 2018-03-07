@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `alumnislim`
@@ -28,30 +28,30 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `customer` (
   `id_customer` int(10) UNSIGNED NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('current','alumni') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `preferred_mail_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `salutation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('current','alumni') COLLATE utf8_unicode_ci NOT NULL,
+  `preferred_mail_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `salutation` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `home_street_1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `home_street_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zipcode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `home_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` enum('male','female','other') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `home_street_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `home_street_2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `zipcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `home_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` enum('male','female','other') COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
-  `school` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `degree` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `major` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `school` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `degree` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `major` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `major_year_start` date NOT NULL,
   `major_year_end` date NOT NULL,
-  `version_num_customer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `version_num_customer` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `customer`
@@ -69,13 +69,13 @@ INSERT INTO `customer` (`id_customer`, `first_name`, `last_name`, `type`, `prefe
 
 CREATE TABLE `users` (
   `id_admin_user` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `last_login` datetime DEFAULT NULL,
-  `login_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `login_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
