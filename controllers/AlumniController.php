@@ -24,8 +24,16 @@ class AlumniController
     {
 		if (! Helper::is_login())
 			return $response->withRedirect("/auth/login");
+        
+        $id = $args['id'];
+        
+        $customer = $this->app->db->query("select * from customer where id_customer=$id");
+        if ($customer->num_rows <= 0)
+			return "404 Not found";
+		
+		$customer = $customer->fetch_assoc();
           
-		$response = $this->app->view->render($response, 'alumni-single.phtml');
+		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer]);
 
 		return $response;
     }

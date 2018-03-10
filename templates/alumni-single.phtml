@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AlumniCRM - Dashboard</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="<?=Helper::url('/media/css/dashboard.css')?>" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Alumni CRM</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="<?=Helper::url('/dashboard')?>">Dashboard</a></li>
+            <li><a href="<?=Helper::url('/auth/register')?>">Create Admin</a></li>
+            <?php if (! Helper::is_login()): ?>
+            <li><a href="<?=Helper::url('/auth/login')?>">Login</a></li>
+            <?php else: ?>
+            <li><a href="<?=Helper::url('/api/v1/logout')?>">Logout</a></li>
+            <?php endif; ?>
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="<?=Helper::url('/dashboard')?>">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
+            <li><a href="#">Email</a></li>
+            <li><a href="<?=Helper::url('/alumni/import')?>">Export / Import</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    
+			<div class="row">
+				<div class="col-lg-12">
+					<form action="">
+						<div class="form-group">
+							<label>First Name</label>
+							<input type="text" class="form-control" id="first_name" name="first_name"
+								value = "<?=$customer['first_name'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Last Name</label>
+							<input type="text" class="form-control" id="last_name" name="last_name"
+								value = "<?=$customer['last_name'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" class="form-control" id="email" name="email"
+								value = "<?=$customer['email'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Degree</label>
+							<input type="text" class="form-control" id="degree" name="degree"
+								value = "<?=$customer['degree'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Major</label>
+							<input type="text" class="form-control" id="major" name="major"
+								value = "<?=$customer['major'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>School</label>
+							<input type="text" class="form-control" id="school" name="school"
+								value = "<?=$customer['school'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Type</label>
+							<select name="type" class="form-control" id="type">
+								<option val="alumni"
+									<?php if ($customer['type'] == 'alumni') echo "selected"; ?>
+								>Alumni</option>
+								<option val="current"
+									<?php if ($customer['type'] == 'current') echo "selected"; ?>
+								>Current</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Salutation</label>
+							<input type="text" class="form-control" id="salutation" name="salutation"
+								value = "<?=$customer['salutation'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Preferred Mail Name</label>
+							<input type="text" class="form-control" id="preferred_mail_name" name="preferred_mail_name"
+								value = "<?=$customer['preferred_mail_name'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Active</label>
+							<input type="checkbox" class="form-control" id="active" name="active"
+								<?php if ($customer['active']) echo "checked"; ?>
+							/>
+						</div>
+						<div class="form-group">
+							<label>Home Street 1</label>
+							<input type="text" class="form-control" id="home_street_1" name="home_street_1"
+								value = "<?=$customer['home_street_1'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Home Street 2</label>
+							<input type="text" class="form-control" id="home_street_2" name="home_street_2"
+								value = "<?=$customer['home_street_2'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Country</label>
+							<input type="text" class="form-control" id="country" name="country"
+								value = "<?=$customer['country'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>City</label>
+							<input type="text" class="form-control" id="city" name="city"
+								value = "<?=$customer['city'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>State</label>
+							<input type="text" class="form-control" id="state" name="state"
+								value = "<?=$customer['state'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Zipcode</label>
+							<input type="text" class="form-control" id="zipcode" name="zipcode"
+								value = "<?=$customer['zipcode'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Home Number</label>
+							<input type="text" class="form-control" id="home_number" name="home_number"
+								value = "<?=$customer['home_number'] ?>"
+							/>
+						</div>
+						<div class="form-group">
+							<label>Phone Number</label>
+							<input type="text" class="form-control" id="phone_number" name="phone_number"
+								value = "<?=$customer['phone_number'] ?>"
+							/>
+						</div>
+					</form>
+				</div>
+			</div>
+        
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>
