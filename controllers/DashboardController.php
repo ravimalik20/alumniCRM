@@ -4,15 +4,19 @@ class DashboardController
 {
     protected $app;
 
-    public function __construct(\Slim\Container $container) {
-        $this->app = $container;
+    public function __construct(\Slim\Container $container)
+    {
+		$this->app = $container;
     }
     
-    public function home($request, $response, $args) {
+    public function home($request, $response, $args)
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect("/auth/login");
       
-      $response = $this->app->view->render($response, 'dashboard.phtml');
+		$response = $this->app->view->render($response, 'dashboard.phtml');
       
-      return $response;
+		return $response;
     }
 }
 

@@ -9,14 +9,20 @@ class AlumniController
     }
     
     public function home($request, $response, $args)
-    {  
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect("/auth/login");
+      
 		$response = $this->app->view->render($response, 'alumni.phtml');
 
 		return $response;
     }
     
     public function get($request, $response, $args)
-    {      
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect("/auth/login");
+          
 		$response = $this->app->view->render($response, 'alumni-single.phtml');
 
 		return $response;
@@ -24,6 +30,9 @@ class AlumniController
     
     public function create($request, $response, $args)
     {
+		if (! Helper::is_login())
+			return $response->withRedirect("/auth/login");
+    
 		$response = $this->app->view->render($response, 'alumni-create.phtml');
 
 		return $response;
