@@ -13,7 +13,9 @@ class AlumniController
 		if (! Helper::is_login())
 			return $response->withRedirect("/auth/login");
       
-		$response = $this->app->view->render($response, 'alumni.phtml');
+		$customers = $this->app->db->query("SELECT * from customer where version_num_customer = 0");
+      
+		$response = $this->app->view->render($response, 'alumni.phtml', ['customers' => $customers]);
 
 		return $response;
     }
