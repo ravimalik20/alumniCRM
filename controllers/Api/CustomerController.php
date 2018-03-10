@@ -47,7 +47,7 @@ class CustomerController
 				"errors" => array("Does not exist.")
 			);
 			
-			return $response->withJson($result, 404);
+			return $response->withJson($result, 200);
 		}
     }
     
@@ -70,7 +70,7 @@ class CustomerController
 					"errors" => array("Does not exist.")
 				);
 				
-				return $response->withJson($result, 404);
+				return $response->withJson($result, 200);
 			}
 			
 			$prev_obj = $prev_obj->fetch_assoc();
@@ -199,7 +199,7 @@ class CustomerController
 				"errors" => $errors
 			);
 			
-			return $response->withJson($result, 400);
+			return $response->withJson($result, 200);
 		}
 		
 		$sql = "INSERT INTO customer (first_name, last_name, preferred_mail_name, salutation, home_street_1,".
@@ -224,7 +224,7 @@ class CustomerController
 				"errors" => array("Internal server error.")
 			);
 		
-			return $response->withJSON($result, 500);
+			return $response->withJSON($result, 200);
 		}
 	}
     

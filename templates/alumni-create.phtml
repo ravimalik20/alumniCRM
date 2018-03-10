@@ -21,6 +21,8 @@
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
+	<script src="<?=Helper::url('/media/js/alumni_create.js')?>"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -68,7 +70,7 @@
           
           <div class="row">
 				<div class="col-lg-12">
-					<form action="">
+					<form action="<?=Helper::url('/api/v1/customer')?>" method="POST">
 						<div class="form-group">
 							<label>First Name</label>
 							<input type="text" class="form-control" id="first_name" name="first_name"/>
@@ -96,8 +98,15 @@
 						<div class="form-group">
 							<label>Type</label>
 							<select name="type" class="form-control" id="type">
-								<option val="alumni">Alumni</option>
-								<option val="current">Current</option>
+								<option value="alumni">Alumni</option>
+								<option value="current">Current</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Gender</label>
+							<select name="gender" class="form-control" id="gender">
+								<option value="male">Male</option>
+								<option value="female">Female</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -109,8 +118,12 @@
 							<input type="text" class="form-control" id="preferred_mail_name" name="preferred_mail_name"/>
 						</div>
 						<div class="form-group">
+							<label>Birthday</label>
+							<input type="date" class="form-control" id="birthday" name="birthday"/>
+						</div>
+						<div class="form-group">
 							<label>Active</label>
-							<input type="checkbox" class="form-control" id="active" name="active"/>
+							<input type="checkbox" class="form-control" id="active" name="active" value="true"/>
 						</div>
 						<div class="form-group">
 							<label>Home Street 1</label>
@@ -144,6 +157,17 @@
 							<label>Phone Number</label>
 							<input type="text" class="form-control" id="phone_number" name="phone_number"/>
 						</div>
+						<div class="form-group">
+							<label>Major year start</label>
+							<input type="date" class="form-control" id="major_year_start" name="major_year_start"/>
+						</div>
+						<div class="form-group">
+							<label>Major year end</label>
+							<input type="date" class="form-control" id="major_year_end" name="major_year_end"/>
+						</div>
+						
+						
+						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
 				</div>
 			</div>

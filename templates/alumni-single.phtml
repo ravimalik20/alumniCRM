@@ -60,8 +60,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="<?=Helper::url('/dashboard')?>">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
+            <li><a href="<?=Helper::url('/dashboard')?>">Overview</a></li>
+            <li class="active"><a href="<?=Helper::url('/alumni')?>">Alumni <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Email</a></li>
             <li><a href="<?=Helper::url('/alumni/import')?>">Export / Import</a></li>
           </ul>
@@ -70,7 +70,7 @@
     
 			<div class="row">
 				<div class="col-lg-12">
-					<form action="">
+					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>" method="POST">
 						<div class="form-group">
 							<label>First Name</label>
 							<input type="text" class="form-control" id="first_name" name="first_name"
