@@ -37,6 +37,21 @@ class AlumniController
 
 		return $response;
     }
+    
+    public function export($request, $response, $args)
+    {
+		return "";
+    }
+    
+    public function import($request, $response, $args)
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect("/auth/login");
+    
+		$response = $this->app->view->render($response, 'alumni-import.phtml');
+
+		return $response;
+    }
 }
 
 ?>

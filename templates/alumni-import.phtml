@@ -45,8 +45,11 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="<?=Helper::url('/dashboard')?>">Dashboard</a></li>
             <li><a href="<?=Helper::url('/auth/register')?>">Create Admin</a></li>
+            <?php if (! Helper::is_login()): ?>
             <li><a href="<?=Helper::url('/auth/login')?>">Login</a></li>
+            <?php else: ?>
             <li><a href="<?=Helper::url('/api/v1/logout')?>">Logout</a></li>
+            <?php endif; ?>
           </ul>
           
         </div>
@@ -57,77 +60,32 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="<?=Helper::url('/dashboard')?>">Overview</a></li>
-            <li class="active"><a href="<?=Helper::url('/alumni')?>">Alumni <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="<?=Helper::url('/dashboard')?>">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
             <li><a href="#">Email</a></li>
-            <li><a href="#">Export / Import</a></li>
+            <li><a href="<?=Helper::url('/alumni')?>">Export / Import</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Alumni Section</h1>
+          <h1 class="page-header">Export / Import</h1>
           
-          <!-- Content goes here -->
-          <div class="row">
-			<div class="col-lg-12">
-				<div class="well">
-					<div class="row">
-						<div class="col-lg-8">
-							<h2>Search</h2>
-							
-							<form class="form-inline">
-							  <div class="form-group">
-								<label for="exampleInputName2">Name</label>
-								<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-							  </div>
-							  <div class="form-group">
-								<label for="exampleInputEmail2">Email</label>
-								<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-							  </div>
-							  <button type="submit" class="btn btn-default">Send invitation</button>
-							</form>
+          <div class="well">
+			  <div class="row">
+				<div class="col-lg-12">
+					<form class="form-inline" action="<?=Helper::url('/alumni/import')?>" method="POST" enctype="multipart/form-data">
+						<div class="form-group col-lg-6">
+							<input type="file" class="form-control" name="file" style="width:100%;" />
 						</div>
-						<div class="col-lg-4">
-							<h2>Add new</h2>
-							
-							<a class="btn btn-primary" href="/alumni/create">Add <i class="fa fa-plus"></i></a>
+						<div class="form-group col-lg-3">
+							<button type="submit" class="btn btn-primary btn-block">Import</button>
 						</div>
-					</div>
-					
+						<div class="form-group col-lg-3">
+							<a class="btn btn-success btn-block" href="<?=Helper::url('/alumni/export')?>">Export <i class="fa fa-external-link"></i></a>
+						</div>
+					</form>
 				</div>
-			</div>
-          </div>
-          
-          <div class="row">
-			<div class="col-lg-12">
-				<table class="table table-striped">
-				  <thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>School</th>
-						<th>Actions</th>
-					</tr>
-				  </thead>
-				  <tbody>
-					<tr>
-						<td>1</td>
-						<td>Ravi Malik</td>
-						<td>ravimali@buffalo.edu</td>
-						<td>UB</td>
-						<td><a class="btn btn-primary" href="/alumni/1">View</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>Ravi Malik</td>
-						<td>ravimali@buffalo.edu</td>
-						<td>UB</td>
-						<td><a class="btn btn-primary" href="/alumni/2">View</a></td>
-					</tr>
-				  </tbody>
-				</table>
-			</div>
-          </div>
+			  </div>
+		  </div>
           
         </div>
       </div>

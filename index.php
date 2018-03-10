@@ -69,6 +69,8 @@ $app->group('/auth', function () {
 $app->group('/alumni', function () {
 	$this->get('', AlumniController::class . ':home');
 	$this->get('/create', AlumniController::class . ':create');
+	$this->get('/export', AlumniController::class . ':export');
+	$this->get('/import', AlumniController::class . ':import');
 	$this->get('/{id}', AlumniController::class . ':get');
 });
 
@@ -80,6 +82,8 @@ $app->group('/api/v1/', function () {
 	$this->group('customer', function () {
 		$this->get('', \Api\CustomerController::class . ':search');
 		$this->post('', \Api\CustomerController::class . ':create');
+		$this->get('/export', \Api\CustomerController::class . ':export');
+		$this->post('/import', \Api\CustomerController::class . ':import');
 		$this->get('/{id}', \Api\CustomerController::class . ':get');
 		$this->post('/{id}', \Api\CustomerController::class . ':update');
 	});

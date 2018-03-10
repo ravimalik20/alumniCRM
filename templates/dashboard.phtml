@@ -17,6 +17,8 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
     <link href="<?=Helper::url('/media/css/dashboard.css')?>" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -61,7 +63,7 @@
             <li class="active"><a href="<?=Helper::url('/dashboard')?>">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
             <li><a href="#">Email</a></li>
-            <li><a href="#">Export / Import</a></li>
+            <li><a href="<?=Helper::url('/alumni/import')?>">Export / Import</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

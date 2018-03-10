@@ -228,6 +228,95 @@ class CustomerController
 		}
 	}
     
+    public function import($request, $response, $args)
+    {
+		$uploadedFiles = $request->getUploadedFiles();
+		$uploadedFile = $uploadedFiles['file'];
+		
+		if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+			$f = fopen($uploadedFile->file, "r");
+		
+			$this->importCSV($f, $response);
+		
+			fclose($f);
+		
+			$result = array(
+				"status" => "success"
+			);
+				
+			return $response->withJson($result, 200);
+		}
+		
+		$result = array(
+			"status" => "failure"
+		);
+			
+		return $response->withJson($result, 200);
+    }
+    
+    public function export($response, $data, $id)
+    {
+    
+    }
+    
+    private function importCSV($file, $response)
+    {
+		$header = fgetcsv($file);
+		$h = $this->prepareHeader($header);
+		
+		while (($row = fgetcsv($file)) !== FALSE ) {
+			$data = array();
+		
+			$email = $row[$h['EMAIL_ADDRESS']];
+			$prev_obj = $this->app->db->query("select * from customer where email='$email'");
+			
+			if ($prev_obj->num_rows > 0) {
+				$prev_obj = $prev_obj->fetch_assoc();
+				$id = $prev_obj['id_customer'];
+			}
+			else {
+				$id = NULL;
+			}
+		
+			$data['first_name'] = $row[$h['FIRST_NAME']];
+			$data['last_name'] = $row[$h['LAST_NAME']];
+			$data['type'] = $row[$h['RECORD_TYPE']] == "Alumni" ? 'alumni' : 'current';
+			$data['preferred_mail_name'] = $row[$h['PREF_MAIL_NAME']];
+			$data['salutation'] = $row[$h['SALUTATION']];
+			$data['active'] = $row[$h['RECORD_STATUS']] == "Active" ? 'true' : 'false';
+			$data['home_street_1'] = $row[$h['HOME_STREET1']];
+			$data['home_street_2'] = $row[$h['HOME_STREET2']];
+			$data['home_street_3'] = $row[$h['HOME_STREET3']];
+			$data['country'] = empty($row[$h['HOME_COUNTRY']]) ? "USA" : $row[$h['HOME_COUNTRY']];
+			$data['city'] = $row[$h['HOME_CITY']];
+			$data['state'] = $row[$h['HOME_STATE_CODE']];
+			$data['zipcode'] = explode("-", $row[$h['HOME_ZIP_CODE']])[0];
+			$data['home_number'] = '1234567890';
+			$data['phone_number'] = '1234567890';
+			$data['email'] = $row[$h['EMAIL_ADDRESS']];
+			$data['gender'] = $row[$h['GENDER_CODE']] == 'M' ? 'male' : 'female';
+			$data['birthday'] = '1992-12-20';
+			$data['school'] = $row[$h['SCHOOL1']];
+			$data['degree'] = $row[$h['DEGREE_CODE1']];
+			$data['major'] = $row[$h['MAJOR1']];
+			$data['major_year_start'] = '2017-01-01';
+			$data['major_year_end'] = '2018-01-01';
+			
+			$this->insert_update($response, $data, $id);
+		}
+    }
+    
+    private function prepareHeader($row)
+    {
+		$header = array();
+		
+		for ($i = 0 ; $i < count($row) ; $i++) {
+			$header[$row[$i]] = $i;
+		}
+		
+		return $header;
+    }
+    
     private function test_input($data)
     {
 		$data = trim($data);
