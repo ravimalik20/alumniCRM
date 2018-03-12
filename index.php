@@ -54,9 +54,7 @@ $container['app_hostname'] = function($c) use ($app_hostname) {
 /* Routes */
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-	$response = $this->view->render($response, 'home.phtml');
-	
-	return $response;
+	return $response->withRedirect("/dashboard");
 });
 
 $app->get('/dashboard', DashboardController::class . ':home');
