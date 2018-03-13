@@ -256,7 +256,70 @@ class CustomerController
     
     public function export($response, $data, $id)
     {
+		$file_name = "storage/data.csv";
     
+		$file = fopen($file_name, "w");
+		
+		$header = array("ID_NUMBER", "RECORD_TYPE", "PREF_ADDR_TYPE_CODE", "PREF_TELEPHONE_TYPE_CODE", "PREF_MAIL_NAME", "PREF_NAME_SORT",
+			"RECORD_STATUS", "SALUTATION", "JNT_SALUTATION", "PREF_JNT_MAIL_NAME1", "PREF_JNT_MAIL_NAME2", "FIRST_NAME",
+			"LAST_NAME", "HOME_STREET1",
+			"HOME_STREET2", "HOME_STREET3", "HOME_FOREIGN_CITYZIP", "HOME_COUNTRY", "HOME_CITY", "HOME_STATE_CODE", "HOME_ZIP_CODE",
+			"HOME_PHONE_NUMBER", "MOBILE_PHONE_NUMBER", "ACTIVE_SEASONAL_ADDR_IND", "WORK_TITLE", "WORK_COMPANY_NAME1",
+			"WORK_COMPANY_NAME2", "WORK_STREET1", "WORK_STREET2", "WORK_STREET3", "WORK_FOREIGN_CITYZIP", "WORK_COUNTRY", "WORK_CITY",
+			"WORK_STATE_CODE", "WORK_ZIP_CODE", "WORK_PHONE_NUMBER", "SCHOOL1", "DEGREE_CODE1", "DEGREE_YEAR1", "MAJOR1", "SCHOOL2",
+			"DEGREE_CODE2", "DEGREE_YEAR2", "MAJOR2", "SCHOOL3", "DEGREE_CODE3", "DEGREE_YEAR3", "MAJOR3", "EMAIL_ADDRESS", "GENDER_CODE",
+			"BIRTH_MONTH", "AGE", "LIFE_MEMBER", "ENGAGEMENT_SCORE", "ENTHUSIASM_SCORE", "RETIRED_IND"
+		);
+		
+		fputcsv($file, $header);
+		
+		$data = $this->app->db->query("select * from customer where version_num_customer = 0");
+		if ($data->num_rows > 0) while ($row = $data->fetch_assoc()){
+			$d = array(
+				$row['id_customer'],
+				$row['type'],
+				"", "",
+				$row['preferred_mail_name'],
+				"", "",
+				$row['salutation'],
+				"", "", "",
+				$row['first_name'],
+				$row['last_name'],
+				$row['home_street_1'],
+				$row['home_street_2'],
+				$row['home_street_3'],
+				"",
+				$row['country'],
+				$row['city'],
+				$row['state'] ,
+				$row['zipcode'],
+				$row['home_number'],
+				$row['phone_number'],
+				"", "", "", "", "", "", "", "", "", "", "", "", "",
+				$row['school'],
+				$row['degree'],
+				$row['major_year_start'],
+				$row['major'],
+				"", "", "", "", "", "", "", "",
+				$row['email'],
+				$row['gender'],
+				$row['birthday'],
+				"", "", "", "", ""
+			);
+			
+			fputcsv($file, $d);
+		}
+		
+		fclose($file);
+		
+		$response = $response->withHeader('Content-Type', 'application/octet-stream')
+			->withHeader('Content-Disposition', 'attachment;filename="'.basename($file_name).'"')
+			->withHeader('Expires', '0')
+			->withHeader('Pragma', 'public')
+			->withHeader('Content-Length', filesize($file_name));
+
+		readfile($file_name);
+		return $response;
     }
     
     private function importCSV($file, $response)
