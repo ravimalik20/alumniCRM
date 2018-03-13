@@ -50,7 +50,12 @@ class AlumniController
     
     public function export($request, $response, $args)
     {
-		return "";
+		if (! Helper::is_login())
+			return $response->withRedirect(Helper::url("/auth/login"));
+    
+		$response = $this->app->view->render($response, 'alumni-export.phtml');
+
+		return $response;
     }
     
     public function import($request, $response, $args)
