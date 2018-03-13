@@ -11,7 +11,7 @@ class AlumniController
     public function home($request, $response, $args)
     {
 		if (! Helper::is_login())
-			return $response->withRedirect("/auth/login");
+			return $response->withRedirect(Helper::url("/auth/login"));
       
 		$customers = $this->app->db->query("SELECT * from customer where version_num_customer = 0");
       
@@ -23,7 +23,7 @@ class AlumniController
     public function get($request, $response, $args)
     {
 		if (! Helper::is_login())
-			return $response->withRedirect("/auth/login");
+			return $response->withRedirect(Helper::url("/auth/login"));
         
         $id = $args['id'];
         
@@ -41,7 +41,7 @@ class AlumniController
     public function create($request, $response, $args)
     {
 		if (! Helper::is_login())
-			return $response->withRedirect("/auth/login");
+			return $response->withRedirect(Helper::url("/auth/login"));
     
 		$response = $this->app->view->render($response, 'alumni-create.phtml');
 
@@ -56,7 +56,7 @@ class AlumniController
     public function import($request, $response, $args)
     {
 		if (! Helper::is_login())
-			return $response->withRedirect("/auth/login");
+			return $response->withRedirect(Helper::url("/auth/login"));
     
 		$response = $this->app->view->render($response, 'alumni-import.phtml');
 

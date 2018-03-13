@@ -12,7 +12,7 @@ class DashboardController
     public function home($request, $response, $args)
     {
 		if (! Helper::is_login())
-			return $response->withRedirect("/auth/login");
+			return $response->withRedirect(Helper::url("/auth/login"));
       
 		$response = $this->app->view->render($response, 'dashboard.phtml');
       
