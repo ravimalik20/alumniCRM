@@ -155,7 +155,7 @@ class CustomerController
 		if(!preg_match("/^[0-9]{5}$/i", $zipcode))
 			array_push($errors, "Zipcode format incorrect.");
 		
-		if (filter_var($email, FILTER_VALIDATE_EMAIL) == false)
+		if (!preg_match("/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/", $email))
 			array_push($errors, "Email format incorrect.");
 		
 		if(!empty($home_number) && !preg_match("/^[1-9][0-9]{9}$/", $home_number))
