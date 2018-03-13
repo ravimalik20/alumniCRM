@@ -213,7 +213,8 @@ class CustomerController
 		$status = $this->app->db->query($sql);
 		if ($status) {
 			$result = array(
-				"status" => "success"
+				"status" => "success",
+				"redirect_url" => \Helper::url('/alumni')
 			);
 			
 			return $response->withJson($result, 200);

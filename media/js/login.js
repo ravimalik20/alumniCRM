@@ -5,9 +5,9 @@ $(document).ready(function () {
 	
 		$.post(url, data, function (val) {
 			if (val.result == "success") {
-				document.cookie = "token="+val.token;
+				var redirect_url = val.redirect_url
 
-				window.location = "/dashboard";
+				window.location = redirect_url;
 			}
 			else	
 				alert("Invalid credentials.");

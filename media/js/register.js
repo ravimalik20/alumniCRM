@@ -5,7 +5,9 @@ $(document).ready(function () {
 	
 		$.post(url, data, function (val) {
 			if (val.status == "success") {
-				window.location = "/dashboard";
+				var redirect_url = val.redirect_url
+
+				window.location = redirect_url;
 			}
 			else	
 				alert("Invalid credentials.");

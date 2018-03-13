@@ -39,7 +39,8 @@ class AuthController
 			
 			$result = array(
 				"result" => "success",
-				"token" => $token
+				"token" => $token,
+				"redirect_url" => \Helper::url('/dashboard')
 			);
 			
 			return $response->withJson($result, 200);
@@ -108,7 +109,8 @@ class AuthController
 		}
 		
 		$result = array(
-			"status" => "success"
+			"status" => "success",
+			"redirect_url" => \Helper::url('/dashboard')
 		);
 		
 		return $response->withJson($result, 200);
