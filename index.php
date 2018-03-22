@@ -85,6 +85,14 @@ $app->group('/api/v1/', function () {
 		$this->get('/{id}', \Api\CustomerController::class . ':get');
 		$this->post('/{id}', \Api\CustomerController::class . ':update');
 	});
+	
+	$this->group('customer/{id}/note', function () {
+		$this->get('', \Api\NoteController::class . ':_list');
+		$this->post('', \Api\NoteController::class . ':create');
+		
+		$this->get('/{id_note}', \Api\NoteController::class . ':get');
+		$this->post('/{id_note}', \Api\NoteController::class . ':update');
+	});
 });
 
 
