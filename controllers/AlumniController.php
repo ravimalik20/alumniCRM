@@ -32,8 +32,10 @@ class AlumniController
 			return "404 Not found";
 		
 		$customer = $customer->fetch_assoc();
+
+		$notes = $this->app->db->query("select * from notes where customer_id=$id order by created_at desc");
           
-		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer]);
+		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer, 'notes' => $notes]);
 
 		return $response;
     }
