@@ -3,5 +3,5 @@
 	<li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
 	<li><a href="<?=Helper::url('/alumni/import')?>">Import</a></li>
 	<li><a href="<?=Helper::url('/alumni/export')?>">Export</a></li>
-	<li><a href="#">Email</a></li>
+	<li><a href="<?=Helper::url('/email')?>">Email</a></li>
 </ul>

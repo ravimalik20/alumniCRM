@@ -72,6 +72,13 @@ $app->group('/alumni', function () {
 	$this->get('/{id}', AlumniController::class . ':get');
 });
 
+$app->group('/email', function () {
+	$this->get('', EmailController::class . ':_list');
+	$this->post('', EmailController::class . ':send');
+	$this->get('/compose', EmailController::class . ':compose');
+	$this->get('/{id}', EmailController::class . ':view');
+});
+
 $app->group('/api/v1/', function () {
 	$this->post('login', \Api\AuthController::class . ':login');
 	$this->get('logout', \Api\AuthController::class . ':logout');
