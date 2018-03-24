@@ -16,5 +16,7 @@ $(document).ready(function () {
 		return false;
 	});
 	
-	$('#data_table').DataTable();
+	$('#data_table').DataTable({
+		"order": [0, 'desc']
+	});
 });

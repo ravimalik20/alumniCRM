@@ -199,40 +199,40 @@
 					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>/note" method="POST">
 						<fieldset>
 							<legend>Notes</legend>
-						</fieldset>
 						
-						<div class="form-group">
-							<label>New Note</label>
-							<textarea class="form-control" rows="5" name="note" placeholder="Add new note..."></textarea>
-						</div>
-						
-						<div class="form-group">
-							<input type="hidden" name="user_id" value="1" />
-						
-							<button type="submit" class="btn btn-primary">Add note</button>
-						</div>
-						
-						<div class="form-group">
-							<label>Previous Notes</label>
-							<table class="table table-striped" id="data_table">
-							  <thead>
-								<tr>
-									<th>Created at</th>
-									<th>Note</th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<?php if (isset($notes) && $notes->num_rows > 0): ?>
-								<?php while ($note=$notes->fetch_assoc()): ?>
+							<div class="form-group">
+								<label>New Note</label>
+								<textarea class="form-control" rows="5" name="note" placeholder="Add new note..."></textarea>
+							</div>
+							
+							<div class="form-group">
+								<input type="hidden" name="user_id" value="1" />
+							
+								<button type="submit" class="btn btn-primary">Add note</button>
+							</div>
+							
+							<div class="form-group">
+								<label>Previous Notes</label>
+								<table class="table table-striped" id="data_table">
+								  <thead>
 									<tr>
-										<td><?=$note['created_at']?></td>
-										<td><?=$note['note']?></td>
+										<th>Created at</th>
+										<th>Note</th>
 									</tr>
-								<?php endwhile; ?>
-								<?php endif; ?>
-							  </tbody>
-							</table>
-						</div>
+								  </thead>
+								  <tbody>
+									<?php if (isset($notes) && $notes->num_rows > 0): ?>
+									<?php while ($note=$notes->fetch_assoc()): ?>
+										<tr>
+											<td><?=$note['created_at']?></td>
+											<td><?=$note['note']?></td>
+										</tr>
+									<?php endwhile; ?>
+									<?php endif; ?>
+								  </tbody>
+								</table>
+							</div>
+						</fieldset>
 					</form>
 				</div>
 			</div>
