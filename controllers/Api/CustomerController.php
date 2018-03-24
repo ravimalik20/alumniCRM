@@ -313,6 +313,10 @@ class CustomerController
 		
 		fclose($file);
 		
+		/*header("Content-Type: application/force-download");
+		header("Content-Type: application/octet-stream");
+		header("Content-Type: application/download");
+		
 		$response = $response->withHeader('Content-Type', 'application/octet-stream')
 			->withHeader('Content-Disposition', 'attachment;filename="'.basename($file_name).'"')
 			->withHeader('Expires', '0')
@@ -320,7 +324,22 @@ class CustomerController
 			->withHeader('Content-Length', filesize($file_name));
 
 		readfile($file_name);
-		return $response;
+		
+		return $response;*/
+		
+		$file = $file_name;
+
+		if (file_exists($file)) {
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment;filename="'.basename($file).'"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
+			readfile($file);
+			exit;
+		}
     }
     
     private function importCSV($file, $response)
