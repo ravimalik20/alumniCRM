@@ -14,9 +14,7 @@ class DashboardController
 		if (! Helper::is_login())
 			return $response->withRedirect(Helper::url("/auth/login"));
       
-		$response = $this->app->view->render($response, 'dashboard.phtml');
-      
-		return $response;
+		return $response->withRedirect(Helper::url("/alumni"));
     }
 }
 
