@@ -35,7 +35,9 @@
     
     <script>
 		$(document).ready(function() {
-			$('#data_table').DataTable();
+			$('#data_table').DataTable({
+				"order": [0, 'desc']
+			});
 		} );
     </script>
     

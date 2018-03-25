@@ -92,6 +92,10 @@ $app->group('/api/v1/', function () {
 		$this->post('/{id}', \Api\CustomerController::class . ':update');
 	});
 	
+	$this->group('customer/{id}/work', function () {
+		$this->post('', \Api\CustomerWorkController::class . ':create');
+	});
+	
 	$this->group('customer/{id}/note', function () {
 		$this->get('', \Api\NoteController::class . ':_list');
 		$this->post('', \Api\NoteController::class . ':create');

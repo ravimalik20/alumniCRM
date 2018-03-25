@@ -187,51 +187,151 @@
 							</div> <!-- row -->
 							
 						</fieldset> <!-- base info -->
-						
+					</form>
+					
+					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])/work ?>" method="POST">
 						<fieldset>
 							<legend>Work Info</legend>
 							
+							<div class="row">
+								
+							
+								<div class="col-lg-6">
+									<div class="form-group">
+										<h4>Add new work position</h4>
+									</div>
+								
+									<div class="form-group">
+										<label>Title</label>
+										<input type="text" class="form-control" id="work_title" name="title"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Address Line 1</label>
+										<input type="text" class="form-control" id="work_address_line1" name="address_line1"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Address Line 2</label>
+										<input type="text" class="form-control" id="work_address_line2" name="address_line2"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>City</label>
+										<input type="text" class="form-control" id="work_city" name="city"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>State</label>
+										<input type="text" class="form-control" id="work_state" name="state"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Country</label>
+										<input type="text" class="form-control" id="work_country" name="country"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Zipcode</label>
+										<input type="text" class="form-control" id="work_zipcode" name="zipcode"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Field</label>
+										<input type="text" class="form-control" id="work_field" name="field"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Date Start</label>
+										<input type="text" class="form-control" id="work_date_start" name="date_start"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<label>Date End</label>
+										<input type="text" class="form-control" id="work_date_end" name="date_end"
+											
+										/>
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary">Add position</button>
+									</div>
+								</div>
+								
+								<div class="col-lg-6">
+									<div class="form-group">
+										<h4>Work positions</h4>
+									</div>
+									
+									<ul class="list-group">
+										<?php if ($works->num_rows > 0): ?>
+										<?php while($work = $works->fetch_assoc()): ?>
+											<li class="list-group-item">
+												 <h4 class="list-group-item-heading"><?=$work['title']?></h4>
+												 <p class="list-group-item-text"><?=$work['date_end']?> - <?=$work['date_start']?></p>
+											</li>
+										<?php endwhile; ?>	
+										<?php endif; ?>
+									</ul>
+								</div>
+								
+							</div>
+							
 							
 						</fieldset>
-						
 					</form>
+
 					
 					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>/note" method="POST">
 						<fieldset>
 							<legend>Notes</legend>
-						
-							<div class="form-group">
-								<label>New Note</label>
-								<textarea class="form-control" rows="5" name="note" placeholder="Add new note..."></textarea>
-							</div>
-							
-							<div class="form-group">
-								<input type="hidden" name="user_id" value="1" />
-							
-								<button type="submit" class="btn btn-primary">Add note</button>
-							</div>
-							
-							<div class="form-group">
-								<label>Previous Notes</label>
-								<table class="table table-striped" id="data_table">
-								  <thead>
-									<tr>
-										<th>Created at</th>
-										<th>Note</th>
-									</tr>
-								  </thead>
-								  <tbody>
-									<?php if (isset($notes) && $notes->num_rows > 0): ?>
-									<?php while ($note=$notes->fetch_assoc()): ?>
-										<tr>
-											<td><?=$note['created_at']?></td>
-											<td><?=$note['note']?></td>
-										</tr>
-									<?php endwhile; ?>
-									<?php endif; ?>
-								  </tbody>
-								</table>
-							</div>
+
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>New Note</label>
+										<textarea class="form-control" rows="5" name="note" placeholder="Add new note..."></textarea>
+									</div>
+									
+									<div class="form-group">
+										<input type="hidden" name="user_id" value="1" />
+									
+										<button type="submit" class="btn btn-primary">Add note</button>
+									</div>
+								</div>
+								
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Previous Notes</label>
+										<table class="table table-striped" id="data_table">
+										  <thead>
+											<tr>
+												<th>Created at</th>
+												<th>Note</th>
+											</tr>
+										  </thead>
+										  <tbody>
+											<?php if (isset($notes) && $notes->num_rows > 0): ?>
+											<?php while ($note=$notes->fetch_assoc()): ?>
+												<tr>
+													<td><?=$note['created_at']?></td>
+													<td><?=$note['note']?></td>
+												</tr>
+											<?php endwhile; ?>
+											<?php endif; ?>
+										  </tbody>
+										</table>
+									</div>
+								</div> <!-- col -->
+							</div> <!-- row -->
 						</fieldset>
 					</form>
 				</div>
