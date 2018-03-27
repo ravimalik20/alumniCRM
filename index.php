@@ -102,6 +102,11 @@ $app->group('/api/v1/', function () {
 		
 		$this->get('/{id_note}', \Api\NoteController::class . ':get');
 	});
+	
+	$this->group('customer/{id}/nocontact', function () {
+		$this->get('/add', \Api\NoContactController::class . ':add');
+		$this->get('/remove', \Api\NoContactController::class . ':remove');
+	});
 });
 
 
