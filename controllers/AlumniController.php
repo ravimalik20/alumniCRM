@@ -27,7 +27,7 @@ class AlumniController
         
         $id = $args['id'];
         
-        $customer = $this->app->db->query("select * from customer where id_customer=$id");
+        $customer = $this->app->db->query("select c.*, n.user_id as no_contact from customer as c left join no_contact_list as n on n.customer_id = c.id_customer where id_customer=$id");
         if ($customer->num_rows <= 0)
 			return "404 Not found";
 		

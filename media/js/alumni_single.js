@@ -19,4 +19,20 @@ $(document).ready(function () {
 	$('#data_table').DataTable({
 		"order": [0, 'desc']
 	});
+	
+	$('.async_reload').click(function () {
+		var url = $(this).attr('href');
+		
+		$.get(url, {}, function (val) {
+			if (val.status == "success") {
+				var redirect_url = val.redirect_url
+
+				window.location = redirect_url;
+			}
+			else	
+				alert("Incorrect data.");
+		});
+		
+		return false;
+	});
 });

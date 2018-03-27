@@ -54,6 +54,16 @@
 			<?php include "components/lhs-menu.php"; ?>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+			<div class="row" style="margin-bottom:2%;">
+				<div class="col-lg-12">
+				<?php if ($customer['no_contact']): ?>
+					<a class="btn btn-lg btn-success pull-right async_reload" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/nocontact/remove'?>"><i class="fa fa-trash"></i> Remove from no contact list</a>
+				<?php else:?>
+					<a class="btn btn-lg btn-danger pull-right async_reload" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/nocontact/add'?>"><i class="fa fa-plus"></i> Add to no contact list</a>
+				<?php endif; ?>
+				</div>
+			</div>
     
 			<div class="row">
 				<div class="col-lg-12">
