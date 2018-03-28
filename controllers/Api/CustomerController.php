@@ -74,6 +74,9 @@ class CustomerController
 			}
 			
 			$prev_obj = $prev_obj->fetch_assoc();
+			
+			$prev_obj = $this->app->db->query("select * from customer where email='".$prev_obj['email']."' order by version_num_customer desc");
+			$prev_obj = $prev_obj->fetch_assoc();
 		}
 	
 		$first_name = $this->test_input($data['first_name']);
@@ -143,14 +146,7 @@ class CustomerController
 		if (!$valid)
 			array_push($errors, "Type must be either 'current' or 'alumni'");
 			
-		$valid = false;
-		foreach (array('true', 'false') as $val) {
-			if ($active == $val)
-				$valid = true;
-		}
-		if (!$valid)
-			array_push($errors, "Active must be either 'true' or 'false'");
-		$active = $active == 'true' ? 1 : 0;
+		$active = $active ? 1 : 0;
 			
 		if(!preg_match("/^[0-9]{5}$/i", $zipcode))
 			array_push($errors, "Zipcode format incorrect.");
@@ -190,7 +186,7 @@ class CustomerController
 			$version = $prev_obj["version_num_customer"] + 1;
 			
 			/* Reset update_token if exists in session. */
-			$_SESSION['update_token'] = "":
+			$_SESSION['update_token'] = "";
 		}
 		else {
 			$version = 0;
@@ -217,7 +213,7 @@ class CustomerController
 		if ($status) {
 			$result = array(
 				"status" => "success",
-				"redirect_url" => \Helper::url('/alumni')
+				"redirect_url" => $id != null ? \Helper::url('/alumni/'.$id) : \Helper::url('/alumni')
 			);
 			
 			return $response->withJson($result, 200);
@@ -382,6 +378,10 @@ class CustomerController
 			
 			if ($prev_obj->num_rows > 0) {
 				$prev_obj = $prev_obj->fetch_assoc();
+				
+				$prev_obj = $this->app->db->query("select * from customer where email='".$prev_obj['email']."' order by version_num_customer desc");
+				$prev_obj = $prev_obj->fetch_assoc();
+				
 				$id = $prev_obj['id_customer'];
 			}
 			else {

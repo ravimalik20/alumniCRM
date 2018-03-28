@@ -33,11 +33,14 @@ class AlumniController
 		
 		$customer = $customer->fetch_assoc();
 
+		$customer_latest = $this->app->db->query("select * from customer where email = '".$customer['email']."' order by version_num_customer desc");
+		$customer_latest = $customer_latest->fetch_assoc();
+
 		$notes = $this->app->db->query("select * from notes where customer_id=$id order by created_at desc");
         
         $work= $this->app->db->query("select * from customer_work where customer_id = $id order by date_end desc");
           
-		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer, 'notes' => $notes, 'works' => $work]);
+		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer, 'customer_latest' => $customer_latest, 'notes' => $notes, 'works' => $work]);
 
 		return $response;
     }
