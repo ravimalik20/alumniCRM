@@ -188,6 +188,9 @@ class CustomerController
 		/* Increment version number on update. */
 		if ($id != null) {
 			$version = $prev_obj["version_num_customer"] + 1;
+			
+			/* Reset update_token if exists in session. */
+			$_SESSION['update_token'] = "":
 		}
 		else {
 			$version = 0;
@@ -327,6 +330,44 @@ class CustomerController
 			exit;
 		}
     }
+
+	public function token($request, $response, $args)
+	{
+		$id = $args['id'];
+		
+		$sql = "SELECT * FROM customer where id_customer = $id";
+		$obj = $this->app->db->query($sql);
+		
+		if ($obj->num_rows <= 0) {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Customer does not exist.")
+			);
+			
+			return $response->withJson($result, 200);
+		}
+		
+		$t = $this->generateRandomString(64);
+		
+		$sql = "UPDATE customer SET token = '$t' where id_customer = $id";
+		$status = $this->app->db->query($sql);
+		if ($status) {
+			$result = array(
+				"status" => "success",
+				"redirect_url" => \Helper::url('/alumni/'.$id)
+			);
+			
+			return $response->withJson($result, 200);
+		}
+		else {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Internal server error.")
+			);
+		
+			return $response->withJSON($result, 200);
+		}
+	}
     
     private function importCSV($file, $response)
     {
@@ -394,6 +435,17 @@ class CustomerController
 		$data = addslashes($data);
 
 		return $data;
+	}
+	
+	private function generateRandomString($length = 10)
+	{
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
 	}
 }
 

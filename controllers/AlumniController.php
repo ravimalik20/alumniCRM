@@ -22,7 +22,7 @@ class AlumniController
     
     public function get($request, $response, $args)
     {
-		if (! Helper::is_login())
+		if (! Helper::is_login() && empty($_SESSION['update_token']))
 			return $response->withRedirect(Helper::url("/auth/login"));
         
         $id = $args['id'];
@@ -60,6 +60,22 @@ class AlumniController
 		$response = $this->app->view->render($response, 'alumni-import.phtml');
 
 		return $response;
+    }
+    
+    public function update($request, $response, $args)
+    {
+		$token = $args['token'];
+		
+		$customer = $this->app->db->query("select * from customer where token = '$token'");
+		if ($customer->num_rows > 0) {
+			$customer = $customer->fetch_assoc();
+		
+			$_SESSION["update_token"] = $token;
+			
+			return $response->withRedirect(Helper::url("/alumni/".$customer['id_customer']));
+		}
+		
+		return $response->withRedirect(Helper::url("/auth/login"));
     }
 }
 
