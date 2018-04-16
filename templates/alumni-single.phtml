@@ -246,91 +246,94 @@
 							<div class="panel-body">
 							
 								<div class="row">
-									<div class="col-lg-6">
-										<div class="form-group">
-											<h4>Add new work position</h4>
-										</div>
-									
-										<div class="form-group">
-											<label>Title *</label>
-											<input type="text" class="form-control" id="work_title" name="title"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Address Line 1 *</label>
-											<input type="text" class="form-control" id="work_address_line1" name="address_line1"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Address Line 2 *</label>
-											<input type="text" class="form-control" id="work_address_line2" name="address_line2"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>City *</label>
-											<input type="text" class="form-control" id="work_city" name="city"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>State *</label>
-											<input type="text" class="form-control" id="work_state" name="state"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Country *</label>
-											<input type="text" class="form-control" id="work_country" name="country"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Zipcode *</label>
-											<input type="text" class="form-control" id="work_zipcode" name="zipcode"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Field *</label>
-											<input type="text" class="form-control" id="work_field" name="field"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Date Start *</label>
-											<input type="date" class="form-control" id="work_date_start" name="date_start"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<label>Date End *</label>
-											<input type="date" class="form-control" id="work_date_end" name="date_end"
-												
-											/>
-										</div>
-										<div class="form-group">
-											<button type="submit" class="btn btn-primary">Add position</button>
-										</div>
-									</div>
-									
-									<div class="col-lg-6">
+
+									<?php if ($works->num_rows > 0): ?>
+									<div class="col-lg-12">
 										<div class="form-group">
 											<h4>Work positions</h4>
 										</div>
 										
 										<ul class="list-group">
-											<?php if ($works->num_rows > 0): ?>
+											
 											<?php while($work = $works->fetch_assoc()): ?>
 												<li class="list-group-item">
 													 <h4 class="list-group-item-heading"><?=$work['title']?></h4>
 													 <p class="list-group-item-text"><?=$work['date_end']?> - <?=$work['date_start']?></p>
 												</li>
 											<?php endwhile; ?>	
-											<?php endif; ?>
+											
 										</ul>
+									</div>
+									<?php endif; ?>
+
+									<div class="col-lg-12">
+										<div class="form-group">
+											<h4>Add new work position</h4>
+										</div>
+									
+										<div class="form-group col-lg-6">
+											<label>Title *</label>
+											<input type="text" class="form-control" id="work_title" name="title"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Address Line 1 *</label>
+											<input type="text" class="form-control" id="work_address_line1" name="address_line1"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Address Line 2 *</label>
+											<input type="text" class="form-control" id="work_address_line2" name="address_line2"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>City *</label>
+											<input type="text" class="form-control" id="work_city" name="city"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>State *</label>
+											<input type="text" class="form-control" id="work_state" name="state"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Country *</label>
+											<input type="text" class="form-control" id="work_country" name="country"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Zipcode *</label>
+											<input type="text" class="form-control" id="work_zipcode" name="zipcode"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Field *</label>
+											<input type="text" class="form-control" id="work_field" name="field"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Date Start *</label>
+											<input type="date" class="form-control" id="work_date_start" name="date_start"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<label>Date End *</label>
+											<input type="date" class="form-control" id="work_date_end" name="date_end"
+												
+											/>
+										</div>
+										<div class="form-group col-lg-6">
+											<button type="submit" class="btn btn-primary">Add position</button>
+										</div>
 									</div>
 									
 								</div>
@@ -369,6 +372,7 @@
 													<th>Created at</th>
 													<th>Note</th>
 													<th>Created By</th>
+													<th>Actions</th>
 												</tr>
 											  </thead>
 											  <tbody>
@@ -378,6 +382,8 @@
 														<td><?=$note['created_at']?></td>
 														<td><?=$note['note']?></td>
 														<td><?=$note['admin_name']?></td>
+														<td><a href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/note/".$note['id_note'])."/delete"?>" class="btn btn-danger async_reload"><i class="fa fa-trash"></i></a>
+														<a href="#" class="btn btn-primary async_reload"><i class="fa fa-edit"></i></a></td>
 													</tr>
 												<?php endwhile; ?>
 												<?php endif; ?>

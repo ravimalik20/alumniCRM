@@ -103,6 +103,7 @@ $app->group('/api/v1/', function () {
 		$this->post('', \Api\NoteController::class . ':create');
 		
 		$this->get('/{id_note}', \Api\NoteController::class . ':get');
+		$this->get('/{id_note}/delete', \Api\NoteController::class . ':delete');
 	});
 	
 	$this->group('customer/{id}/nocontact', function () {

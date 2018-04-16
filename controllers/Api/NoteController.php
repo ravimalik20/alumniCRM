@@ -94,6 +94,42 @@ class NoteController
     {
 		
     }
+
+	public function delete($request, $response, $args)
+    {
+		$id = $args['id'];
+    
+		$customer = $this->fetch_customer($id);
+		if ($customer == null) {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Customer does not exist.")
+			);
+			
+			return $response->withJson($result, 200);
+		}
+
+		$id_note = $args['id_note'];
+
+		$status = $this->app->db->query("delete from notes where id_note = $id_note;");
+
+		if ($status) {
+			$result = array(
+				"status" => "success",
+				"redirect_url" => \Helper::url('/alumni/'.$id)
+			);
+			
+			return $response->withJson($result, 200);
+		}
+		else {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Internal server error.")
+			);
+		
+			return $response->withJSON($result, 200);
+		} 
+    }
     
     private function fetch_customer($id)
     {
