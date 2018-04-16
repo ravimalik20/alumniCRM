@@ -29,6 +29,8 @@
 
 	<script src="<?=Helper::url('/media/js/alumni_single.js')?>"></script>
 
+	<script src="<?=Helper::url('/media/js/global.js')?>"></script>
+
 	<style>
 		fieldset {
 			margin-bottom: 5%;
@@ -77,25 +79,25 @@
 									<!-- Col 1 -->
 									<div class="col-lg-6">
 										<div class="form-group">
-											<label>First Name</label>
+											<label>First Name *</label>
 											<input type="text" class="form-control" id="first_name" name="first_name"
 												value = "<?=$customer_latest['first_name'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Email</label>
+											<label>Email *</label>
 											<input type="text" class="form-control" id="email" name="email"
 												value = "<?=$customer_latest['email'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Major</label>
+											<label>Major *</label>
 											<input type="text" class="form-control" id="major" name="major"
 												value = "<?=$customer_latest['major'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Gender</label>
+											<label>Gender *</label>
 											<select name="gender" class="form-control" id="gender">
 												<option value="male"
 													<?php if ($customer_latest['gender'] == 'male') echo "selected"; ?>
@@ -106,7 +108,7 @@
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Type</label>
+											<label>Type *</label>
 											<select name="type" class="form-control" id="type">
 												<option value="alumni"
 													<?php if ($customer_latest['type'] == 'alumni') echo "selected"; ?>
@@ -117,13 +119,13 @@
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Preferred Mail Name</label>
+											<label>Preferred Mail Name *</label>
 											<input type="text" class="form-control" id="preferred_mail_name" name="preferred_mail_name"
 												value = "<?=$customer_latest['preferred_mail_name'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Home Street 1</label>
+											<label>Home Street 1 *</label>
 											<input type="text" class="form-control" id="home_street_1" name="home_street_1"
 												value = "<?=$customer_latest['home_street_1'] ?>"
 											/>
@@ -135,19 +137,19 @@
 											/>
 										</div>
 										<div class="form-group">
-											<label>State</label>
+											<label>State *</label>
 											<input type="text" class="form-control" id="state" name="state"
 												value = "<?=$customer_latest['state'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Zipcode</label>
+											<label>Zipcode *</label>
 											<input type="text" class="form-control" id="zipcode" name="zipcode"
 												value = "<?=$customer_latest['zipcode'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Major year start</label>
+											<label>Major year start *</label>
 											<input type="date" class="form-control" id="major_year_start" name="major_year_start"
 												value = "<?=$customer_latest['major_year_start'] ?>"
 											/>
@@ -162,49 +164,49 @@
 									<!-- Col 2 -->
 									<div class="col-lg-6">
 										<div class="form-group">
-											<label>Last Name</label>
+											<label>Last Name *</label>
 											<input type="text" class="form-control" id="last_name" name="last_name"
 												value = "<?=$customer_latest['last_name'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Degree</label>
+											<label>Degree *</label>
 											<input type="text" class="form-control" id="degree" name="degree"
 												value = "<?=$customer_latest['degree'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>School</label>
+											<label>School *</label>
 											<input type="text" class="form-control" id="school" name="school"
 												value = "<?=$customer_latest['school'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Birthday</label>
+											<label>Birthday *</label>
 											<input type="date" class="form-control" id="birthday" name="birthday"
 												value = "<?=$customer_latest['birthday'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Salutation</label>
+											<label>Salutation *</label>
 											<input type="text" class="form-control" id="salutation" name="salutation"
 												value = "<?=$customer_latest['salutation'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Active</label>
+											<label>Active *</label>
 											<input type="checkbox" class="form-control" id="active" name="active"
 												<?php if ($customer_latest['active']) echo "checked"; ?>
 											/>
 										</div>
 										<div class="form-group">
-											<label>Country</label>
+											<label>Country *</label>
 											<input type="text" class="form-control" id="country" name="country"
 												value = "<?=$customer_latest['country'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>City</label>
+											<label>City *</label>
 											<input type="text" class="form-control" id="city" name="city"
 												value = "<?=$customer_latest['city'] ?>"
 											/>
@@ -216,13 +218,13 @@
 											/>
 										</div>
 										<div class="form-group">
-											<label>Phone Number</label>
+											<label>Phone Number *</label>
 											<input type="text" class="form-control" id="phone_number" name="phone_number"
 												value = "<?=$customer_latest['phone_number'] ?>"
 											/>
 										</div>
 										<div class="form-group">
-											<label>Major year end</label>
+											<label>Major year end *</label>
 											<input type="date" class="form-control" id="major_year_end" name="major_year_end"
 												value = "<?=$customer_latest['major_year_end'] ?>"
 											/>
@@ -250,61 +252,61 @@
 										</div>
 									
 										<div class="form-group">
-											<label>Title</label>
+											<label>Title *</label>
 											<input type="text" class="form-control" id="work_title" name="title"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Address Line 1</label>
+											<label>Address Line 1 *</label>
 											<input type="text" class="form-control" id="work_address_line1" name="address_line1"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Address Line 2</label>
+											<label>Address Line 2 *</label>
 											<input type="text" class="form-control" id="work_address_line2" name="address_line2"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>City</label>
+											<label>City *</label>
 											<input type="text" class="form-control" id="work_city" name="city"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>State</label>
+											<label>State *</label>
 											<input type="text" class="form-control" id="work_state" name="state"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Country</label>
+											<label>Country *</label>
 											<input type="text" class="form-control" id="work_country" name="country"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Zipcode</label>
+											<label>Zipcode *</label>
 											<input type="text" class="form-control" id="work_zipcode" name="zipcode"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Field</label>
+											<label>Field *</label>
 											<input type="text" class="form-control" id="work_field" name="field"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Date Start</label>
+											<label>Date Start *</label>
 											<input type="date" class="form-control" id="work_date_start" name="date_start"
 												
 											/>
 										</div>
 										<div class="form-group">
-											<label>Date End</label>
+											<label>Date End *</label>
 											<input type="date" class="form-control" id="work_date_end" name="date_end"
 												
 											/>
@@ -347,12 +349,12 @@
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="form-group">
-											<label>New Note</label>
+											<label>New Note *</label>
 											<textarea class="form-control" rows="5" name="note" placeholder="Add new note..."></textarea>
 										</div>
 										
 										<div class="form-group">
-											<input type="hidden" name="user_id" value="1" />
+											<input type="hidden" name="user_id" value="<?=$admin_user_id?>" />
 										
 											<button type="submit" class="btn btn-primary">Add note</button>
 										</div>
@@ -366,6 +368,7 @@
 												<tr>
 													<th>Created at</th>
 													<th>Note</th>
+													<th>Created By</th>
 												</tr>
 											  </thead>
 											  <tbody>
@@ -374,6 +377,7 @@
 													<tr>
 														<td><?=$note['created_at']?></td>
 														<td><?=$note['note']?></td>
+														<td><?=$note['admin_name']?></td>
 													</tr>
 												<?php endwhile; ?>
 												<?php endif; ?>
@@ -415,5 +419,27 @@
       </div>
     </div>
     
+	<div class="modal fade" tabindex="-1" role="dialog" id="error_modal">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    <h4 class="modal-title">Error</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="row">
+				<div class="col-lg-12">
+					<ul id="errors_list" style="color:red;">
+					</ul>
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   </body>
 </html>

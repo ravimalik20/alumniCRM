@@ -9,8 +9,15 @@ $(document).ready(function () {
 
 				window.location = redirect_url;
 			}
-			else	
-				alert("Incorrect data.");
+			else {
+				$("#errors_list").html("");
+
+				for (i = 0 ; i < val.errors.length ; i++) {
+					$("#errors_list").append("<li>"+val.errors[i]+"</li>");
+				}
+
+				$('#error_modal').modal('toggle');
+			}
 		});
 	
 		return false;
@@ -29,8 +36,15 @@ $(document).ready(function () {
 
 				window.location = redirect_url;
 			}
-			else	
-				alert("Incorrect data.");
+			else {	
+				$("#errors_list").html("");
+
+				for (i = 0 ; i < val.errors.length ; i++) {
+					$("#errors_list").append("<li>"+val.errors[i]+"</li>");
+				}
+
+				$('#error_modal').modal('toggle');
+			}
 		});
 		
 		return false;

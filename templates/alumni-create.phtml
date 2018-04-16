@@ -23,6 +23,8 @@
 
 	<script src="<?=Helper::url('/media/js/alumni_create.js')?>"></script>
 
+	<script src="<?=Helper::url('/media/js/global.js')?>"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -47,103 +49,108 @@
           <div class="row">
 				<div class="col-lg-12">
 					<form action="<?=Helper::url('/api/v1/customer')?>" method="POST">
-						<div class="form-group">
-							<label>First Name</label>
-							<input type="text" class="form-control" id="first_name" name="first_name"/>
+						<div class="row">
+
+							<div class="form-group col-lg-6">
+								<label>First Name *</label>
+								<input type="text" class="form-control" id="first_name" name="first_name"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Last Name *</label>
+								<input type="text" class="form-control" id="last_name" name="last_name"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Email *</label>
+								<input type="text" class="form-control" id="email" name="email"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Degree *</label>
+								<input type="text" class="form-control" id="degree" name="degree"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Major *</label>
+								<input type="text" class="form-control" id="major" name="major"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>School *</label>
+								<input type="text" class="form-control" id="school" name="school"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Type *</label>
+								<select name="type" class="form-control" id="type">
+									<option value="alumni">Alumni</option>
+									<option value="current">Current</option>
+								</select>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Gender *</label>
+								<select name="gender" class="form-control" id="gender">
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+								</select>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Salutation *</label>
+								<input type="text" class="form-control" id="salutation" name="salutation"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Preferred Mail Name *</label>
+								<input type="text" class="form-control" id="preferred_mail_name" name="preferred_mail_name"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Birthday *</label>
+								<input type="date" class="form-control" id="birthday" name="birthday"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Active</label>
+								<input type="checkbox" class="form-control" id="active" name="active" value="true"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Home Street 1 *</label>
+								<input type="text" class="form-control" id="home_street_1" name="home_street_1"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Home Street 2</label>
+								<input type="text" class="form-control" id="home_street_2" name="home_street_2"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Country *</label>
+								<input type="text" class="form-control" id="country" name="country"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>City *</label>
+								<input type="text" class="form-control" id="city" name="city"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>State *</label>
+								<input type="text" class="form-control" id="state" name="state"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Zipcode *</label>
+								<input type="text" class="form-control" id="zipcode" name="zipcode"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Home Number</label>
+								<input type="text" class="form-control" id="home_number" name="home_number"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Phone Number *</label>
+								<input type="text" class="form-control" id="phone_number" name="phone_number"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Major year start *</label>
+								<input type="date" class="form-control" id="major_year_start" name="major_year_start"/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Major year end *</label>
+								<input type="date" class="form-control" id="major_year_end" name="major_year_end"/>
+							</div>
+							
+							<div class="form-group col-lg-6">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+
 						</div>
-						<div class="form-group">
-							<label>Last Name</label>
-							<input type="text" class="form-control" id="last_name" name="last_name"/>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="text" class="form-control" id="email" name="email"/>
-						</div>
-						<div class="form-group">
-							<label>Degree</label>
-							<input type="text" class="form-control" id="degree" name="degree"/>
-						</div>
-						<div class="form-group">
-							<label>Major</label>
-							<input type="text" class="form-control" id="major" name="major"/>
-						</div>
-						<div class="form-group">
-							<label>School</label>
-							<input type="text" class="form-control" id="school" name="school"/>
-						</div>
-						<div class="form-group">
-							<label>Type</label>
-							<select name="type" class="form-control" id="type">
-								<option value="alumni">Alumni</option>
-								<option value="current">Current</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Gender</label>
-							<select name="gender" class="form-control" id="gender">
-								<option value="male">Male</option>
-								<option value="female">Female</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Salutation</label>
-							<input type="text" class="form-control" id="salutation" name="salutation"/>
-						</div>
-						<div class="form-group">
-							<label>Preferred Mail Name</label>
-							<input type="text" class="form-control" id="preferred_mail_name" name="preferred_mail_name"/>
-						</div>
-						<div class="form-group">
-							<label>Birthday</label>
-							<input type="date" class="form-control" id="birthday" name="birthday"/>
-						</div>
-						<div class="form-group">
-							<label>Active</label>
-							<input type="checkbox" class="form-control" id="active" name="active" value="true"/>
-						</div>
-						<div class="form-group">
-							<label>Home Street 1</label>
-							<input type="text" class="form-control" id="home_street_1" name="home_street_1"/>
-						</div>
-						<div class="form-group">
-							<label>Home Street 2</label>
-							<input type="text" class="form-control" id="home_street_2" name="home_street_2"/>
-						</div>
-						<div class="form-group">
-							<label>Country</label>
-							<input type="text" class="form-control" id="country" name="country"/>
-						</div>
-						<div class="form-group">
-							<label>City</label>
-							<input type="text" class="form-control" id="city" name="city"/>
-						</div>
-						<div class="form-group">
-							<label>State</label>
-							<input type="text" class="form-control" id="state" name="state"/>
-						</div>
-						<div class="form-group">
-							<label>Zipcode</label>
-							<input type="text" class="form-control" id="zipcode" name="zipcode"/>
-						</div>
-						<div class="form-group">
-							<label>Home Number</label>
-							<input type="text" class="form-control" id="home_number" name="home_number"/>
-						</div>
-						<div class="form-group">
-							<label>Phone Number</label>
-							<input type="text" class="form-control" id="phone_number" name="phone_number"/>
-						</div>
-						<div class="form-group">
-							<label>Major year start</label>
-							<input type="date" class="form-control" id="major_year_start" name="major_year_start"/>
-						</div>
-						<div class="form-group">
-							<label>Major year end</label>
-							<input type="date" class="form-control" id="major_year_end" name="major_year_end"/>
-						</div>
-						
-						
-						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -151,6 +158,28 @@
         </div>
       </div>
     </div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="error_modal">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    <h4 class="modal-title">Error</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="row">
+				<div class="col-lg-12">
+					<ul id="errors_list" style="color:red;">
+					</ul>
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
     
   </body>
 </html>

@@ -36,11 +36,13 @@ class AlumniController
 		$customer_latest = $this->app->db->query("select * from customer where email = '".$customer['email']."' order by version_num_customer desc");
 		$customer_latest = $customer_latest->fetch_assoc();
 
-		$notes = $this->app->db->query("select * from notes where customer_id=$id order by created_at desc");
+		$notes = $this->app->db->query("select notes.*, users.name as admin_name from notes join users on users.id_admin_user = notes.user_id where customer_id=$id order by created_at desc");
         
         $work= $this->app->db->query("select * from customer_work where customer_id = $id order by date_end desc");
-          
-		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer, 'customer_latest' => $customer_latest, 'notes' => $notes, 'works' => $work]);
+        
+		$admin_user_id = Helper::user_id($this->app);
+  
+		$response = $this->app->view->render($response, 'alumni-single.phtml', ['customer' => $customer, 'customer_latest' => $customer_latest, 'notes' => $notes, 'works' => $work, 'admin_user_id' => $admin_user_id]);
 
 		return $response;
     }

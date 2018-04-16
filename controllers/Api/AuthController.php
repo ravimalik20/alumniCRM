@@ -60,7 +60,8 @@ class AuthController
 		session_destroy();
 		
 		$result = array(
-			"result" => "success"
+			"result" => "success",
+			"redirect_url" => \Helper::url('/dashboard')
 		);
 		
 		return $response->withJson($result, 200);

@@ -16,7 +16,7 @@
 		<?php if (! Helper::is_login()): ?>
 		<li><a href="<?=Helper::url('/auth/login')?>">Login</a></li>
 		<?php else: ?>
-		<li><a href="<?=Helper::url('/api/v1/logout')?>">Logout</a></li>
+		<li><a id="logout" href="<?=Helper::url('/api/v1/logout')?>">Logout</a></li>
 		<?php endif; ?>
 	  </ul>
 	  

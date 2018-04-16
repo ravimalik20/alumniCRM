@@ -19,6 +19,20 @@ class Helper
 		else
 			return false;
 	}
+
+	public static function user_id($app)
+	{
+		if (empty($_SESSION['auth_token']))
+			return 0;
+
+		$user = $app->db->query("select * from users where login_token='".$_SESSION['auth_token']."';");
+		if ($user->num_rows <= 0)
+			return 0;
+
+		$user = $user->fetch_assoc();
+
+		return $user['id_admin_user'];
+	}
 }
 
 ?>
