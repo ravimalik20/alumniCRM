@@ -28,6 +28,59 @@
 
 	<script src="<?=Helper::url('/media/js/global.js')?>"></script>
 
+	<style>
+		#cover {
+			background: url("<?=Helper::url('/media/spinner.gif')?>") no-repeat scroll center center #FFF;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+		}
+
+		.dropzone {
+		  border: 2px dashed #0087F7;
+		  border-radius: 5px;
+		  background: white;}
+		  .dropzone .dz-message {
+			font-weight: 400; }
+			.dropzone .dz-message .note {
+			  font-size: 0.8em;
+			  font-weight: 200;
+			  display: block;
+			  margin-top: 1.4rem;
+		}
+	</style>
+
+    <script>
+		
+		$(document).ready(function () {
+			$('#cover').fadeOut(1000);
+
+			Dropzone.options.dzone = {
+				init: function () {
+					this.on("addedfile", function (file) {
+						$('#cover').fadeIn(10);
+					});
+
+					this.on("complete", function () {
+						$('#cover').fadeOut(1000);
+					});
+
+					this.on("success", function (val) {
+						console.log(val);
+					});
+
+					this.on("error", function (val, error) {
+						alert(error);
+					});
+				},
+				acceptedFiles: ".csv"
+			};
+		});
+
+		
+		
+    </script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -36,6 +89,8 @@
   </head>
 
   <body>
+
+	<div id="cover"></div>
 
     <!-- Top menu -->
     <?php include "components/top-menu.php"; ?>
@@ -52,10 +107,11 @@
 				<div class="col-lg-12">				
 					<i class="fa fa-spinner" id="spinner" aria-hidden="true"></i>
 
-					<form action="<?=Helper::url('/api/v1/customer/import')?>" method="POST" class="dropzone" id="my-awesome-dropzone">
+					<form action="<?=Helper::url('/api/v1/customer/import')?>" method="POST" class="dropzone" id="dzone">
 						<div class="fallback">
 							<input name="file" type="file" multiple />
 						</div>
+						<div class="dz-message">Drop files here or click to upload.</div>
 					</form>
 				</div>
 			</div>

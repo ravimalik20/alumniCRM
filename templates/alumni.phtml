@@ -37,7 +37,7 @@
     
 	<style>
 		#cover {
-			background: url("to/your/ajaxloader.gif") no-repeat scroll center center #FFF;
+			background: url("<?=Helper::url('/media/spinner.gif')?>") no-repeat scroll center center #FFF;
 			position: absolute;
 			height: 100%;
 			width: 100%;
@@ -45,15 +45,12 @@
 	</style>
 
     <script>
-		$(window).on('load', function(){
-			$('#cover').fadeOut(1000);
-		});
-
-		
-
 		$(document).ready(function() {
 			$('#data_table').DataTable({
-				"order": [0, 'desc']
+				"order": [0, 'desc'],
+				"initComplete": function (settings, json) {
+					$('#cover').fadeOut(1000);
+				}
 			});
 		} );
     </script>
