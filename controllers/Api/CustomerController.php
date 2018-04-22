@@ -6,6 +6,8 @@ class CustomerController
 {
     protected $app;
 
+	private $customer_id;
+
     public function __construct(\Slim\Container $container)
 	{
         $this->app = $container;
@@ -211,6 +213,13 @@ class CustomerController
 
 		$status = $this->app->db->query($sql);
 		if ($status) {
+			if ($id != null) {
+				$this->customer_id = $id;
+			}
+			else {
+				$this->customer_id = $this->app->db->insert_id;
+			}
+
 			$result = array(
 				"status" => "success",
 				"redirect_url" => $id != null ? \Helper::url('/alumni/'.$id) : \Helper::url('/alumni')
@@ -219,6 +228,8 @@ class CustomerController
 			return $response->withJson($result, 200);
 		}
 		else {
+			$this->customer_id = null;
+
 			$result = array(
 				"status" => "failure",
 				"errors" => array("Internal server error.")
@@ -275,6 +286,10 @@ class CustomerController
 		
 		$data = $this->app->db->query("select * from customer where version_num_customer = 0");
 		if ($data->num_rows > 0) while ($row = $data->fetch_assoc()){
+			$customer_id = $row['id_customer'];
+
+			$work = $this->app->db->query("select * from customer_work where customer_id = $customer_id");
+
 			$d = array(
 				$row['id_customer'],
 				$row['type'],
@@ -295,7 +310,39 @@ class CustomerController
 				$row['zipcode'],
 				$row['home_number'],
 				$row['phone_number'],
-				"", "", "", "", "", "", "", "", "", "", "", "", "",
+				""
+			);
+
+			if ($work->num_rows > 0) {
+				$w1 = $work->fetch_assoc();
+
+				if ($work->num_rows >= 2)
+					$w2 = $work->fetch_assoc();
+				else
+					$w2 = null;
+
+				$d = array_merge($d, array (
+					$w1['title'],
+					"", // Company Name
+					"", // Second Company Name
+					$w1['address_line1'],
+					$w1['address_line2'],
+					"",
+					"",
+					$w1['country'],
+					$w1['city'],
+					$w1['state'],
+					$w1['zipcode'],
+					"" // Company Phone Number
+				));
+			}
+			else {
+				$d = array_merge($d, array(
+					"", "", "", "", "", "", "", "", "", "", "", ""
+				));
+			}
+
+			$d = array_merge($d, array(
 				$row['school'],
 				$row['degree'],
 				$row['major_year_start'],
@@ -305,8 +352,8 @@ class CustomerController
 				$row['gender'],
 				$row['birthday'],
 				"", "", "", "", ""
-			);
-			
+			));
+
 			fputcsv($file, $d);
 		}
 		
@@ -370,50 +417,86 @@ class CustomerController
 		$header = fgetcsv($file);
 		$h = $this->prepareHeader($header);
 		
+		$errors = array();
+		$row_num = 0;
+
 		while (($row = fgetcsv($file)) !== FALSE ) {
-			$data = array();
-		
-			$email = $row[$h['EMAIL_ADDRESS']];
-			$prev_obj = $this->app->db->query("select * from customer where email='$email'");
+			try {
+				$row_num++;
+
+				$data = array();
 			
-			if ($prev_obj->num_rows > 0) {
-				$prev_obj = $prev_obj->fetch_assoc();
+				$email = $row[$h['EMAIL_ADDRESS']];
+				$prev_obj = $this->app->db->query("select * from customer where email='$email'");
 				
-				$prev_obj = $this->app->db->query("select * from customer where email='".$prev_obj['email']."' order by version_num_customer desc");
-				$prev_obj = $prev_obj->fetch_assoc();
-				
-				$id = $prev_obj['id_customer'];
-			}
-			else {
-				$id = NULL;
-			}
-		
-			$data['first_name'] = $row[$h['FIRST_NAME']];
-			$data['last_name'] = $row[$h['LAST_NAME']];
-			$data['type'] = $row[$h['RECORD_TYPE']] == "Alumni" ? 'alumni' : 'current';
-			$data['preferred_mail_name'] = $row[$h['PREF_MAIL_NAME']];
-			$data['salutation'] = $row[$h['SALUTATION']];
-			$data['active'] = $row[$h['RECORD_STATUS']] == "Active" ? 'true' : 'false';
-			$data['home_street_1'] = $row[$h['HOME_STREET1']];
-			$data['home_street_2'] = $row[$h['HOME_STREET2']];
-			$data['home_street_3'] = $row[$h['HOME_STREET3']];
-			$data['country'] = empty($row[$h['HOME_COUNTRY']]) ? "USA" : $row[$h['HOME_COUNTRY']];
-			$data['city'] = $row[$h['HOME_CITY']];
-			$data['state'] = $row[$h['HOME_STATE_CODE']];
-			$data['zipcode'] = explode("-", $row[$h['HOME_ZIP_CODE']])[0];
-			$data['home_number'] = '1234567890';
-			$data['phone_number'] = '1234567890';
-			$data['email'] = $row[$h['EMAIL_ADDRESS']];
-			$data['gender'] = $row[$h['GENDER_CODE']] == 'M' ? 'male' : 'female';
-			$data['birthday'] = '1992-12-20';
-			$data['school'] = $row[$h['SCHOOL1']];
-			$data['degree'] = $row[$h['DEGREE_CODE1']];
-			$data['major'] = $row[$h['MAJOR1']];
-			$data['major_year_start'] = '2017-01-01';
-			$data['major_year_end'] = '2018-01-01';
+				if ($prev_obj->num_rows > 0) {
+					$prev_obj = $prev_obj->fetch_assoc();
+					
+					$prev_obj = $this->app->db->query("select * from customer where email='".$prev_obj['email']."' order by version_num_customer desc");
+					$prev_obj = $prev_obj->fetch_assoc();
+					
+					$id = $prev_obj['id_customer'];
+				}
+				else {
+					$id = NULL;
+				}
 			
-			$this->insert_update($response, $data, $id);
+				$data['first_name'] = $row[$h['FIRST_NAME']];
+				$data['last_name'] = $row[$h['LAST_NAME']];
+				$data['type'] = $row[$h['RECORD_TYPE']] == "Alumni" ? 'alumni' : 'current';
+				$data['preferred_mail_name'] = $row[$h['PREF_MAIL_NAME']];
+				$data['salutation'] = $row[$h['SALUTATION']];
+				$data['active'] = $row[$h['RECORD_STATUS']] == "Active" ? 'true' : 'false';
+				$data['home_street_1'] = $row[$h['HOME_STREET1']];
+				$data['home_street_2'] = $row[$h['HOME_STREET2']];
+				$data['home_street_3'] = $row[$h['HOME_STREET3']];
+				$data['country'] = empty($row[$h['HOME_COUNTRY']]) ? "USA" : $row[$h['HOME_COUNTRY']];
+				$data['city'] = $row[$h['HOME_CITY']];
+				$data['state'] = $row[$h['HOME_STATE_CODE']];
+				$data['zipcode'] = explode("-", $row[$h['HOME_ZIP_CODE']])[0];
+				$data['home_number'] = '1234567890';
+				$data['phone_number'] = '1234567890';
+				$data['email'] = $row[$h['EMAIL_ADDRESS']];
+				$data['gender'] = $row[$h['GENDER_CODE']] == 'M' ? 'male' : 'female';
+				$data['birthday'] = '1992-12-20';
+				$data['school'] = $row[$h['SCHOOL1']];
+				$data['degree'] = $row[$h['DEGREE_CODE1']];
+				$data['major'] = $row[$h['MAJOR1']];
+				$data['major_year_start'] = '2017-01-01';
+				$data['major_year_end'] = '2018-01-01';
+				
+				$this->insert_update($response, $data, $id);
+
+				$customer_id = $this->customer_id;
+				if ($customer_id == null) {
+					array_push($errors, $row_num);
+					continue;
+				}
+
+				$work_title = $row[$h['WORK_TITLE']];
+				$work_company_name_1 = $row[$h['WORK_COMPANY_NAME1']];
+				$work_street_1 = $row[$h['WORK_STREET1']];
+				$work_street_2 = $row[$h['WORK_STREET2']];
+				$work_country = $row[$h['WORK_COUNTRY']];
+				$work_city = $row[$h['WORK_CITY']];
+				$work_state_code = $row[$h['WORK_STATE_CODE']];
+				$work_zipcode = $row[$h['WORK_ZIP_CODE']];
+				$work_phonenumber = $row[$h['WORK_PHONE_NUMBER']];
+
+				$sql = "INSERT INTO customer_work (title, address_line1, address_line2, city, state, country, zipcode, field, customer_id, date_start, date_end) VALUES ('$work_title', '$work_street_1', '$work_street_2', '$work_city', '$work_state_code', '$work_country', '$work_zipcode', '', '$customer_id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+				
+				$res = $this->app->db->query($sql);
+				if ($res['status'] == "failure") {
+					array_push($errors, $row_num);
+					continue;
+				}
+			}
+			catch (Exception $e) {
+				array_push($errors, $row_num);
+			}
 		}
+
+		print_r($errors); die;
     }
     
     private function prepareHeader($row)
