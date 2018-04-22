@@ -35,7 +35,22 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+	<style>
+		#cover {
+			background: url("to/your/ajaxloader.gif") no-repeat scroll center center #FFF;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+
     <script>
+		$(window).on('load', function(){
+			$('#cover').fadeOut(1000);
+		});
+
+		
+
 		$(document).ready(function() {
 			$('#data_table').DataTable({
 				"order": [0, 'desc']
@@ -46,6 +61,8 @@
   </head>
 
   <body>
+
+	<div id="cover"></div>
 
     <!-- Top menu -->
     <?php include "components/top-menu.php"; ?>
