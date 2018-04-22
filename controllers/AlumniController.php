@@ -13,7 +13,7 @@ class AlumniController
 		if (! Helper::is_login())
 			return $response->withRedirect(Helper::url("/auth/login"));
       
-		$customers = $this->app->db->query("SELECT * from customer where version_num_customer = 0");
+		$customers = $this->app->db->query("SELECT c.*, ncl.user_id as blocked_by from customer as c left join no_contact_list as ncl on c.id_customer = ncl.customer_id  where version_num_customer = 0");
       
 		$response = $this->app->view->render($response, 'alumni.phtml', ['customers' => $customers]);
 

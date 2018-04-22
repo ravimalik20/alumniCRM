@@ -27,7 +27,9 @@ class NoContactController
 			return $response->withJson($result, 200);
 		}
 		
-		$sql = "INSERT INTO no_contact_list (customer_id, user_id) VALUES ($id, 1)";
+		$admin_id = \Helper::user_id($this->app);
+
+		$sql = "INSERT INTO no_contact_list (customer_id, user_id) VALUES ($id, $admin_id)";
 		$status = $this->app->db->query($sql);
 		
 		if ($status) {

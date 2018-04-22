@@ -84,7 +84,7 @@
           
           <!-- Content goes here -->
           <div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12 table-responsive">
 				<table class="table table-striped" id="data_table">
 				  <thead>
 					<tr>
@@ -94,19 +94,31 @@
 						<th>School</th>
 						<th>Degree</th>
 						<th>Major</th>
+						<th>Can Contact</th>
 						<th>Actions</th>
 					</tr>
 				  </thead>
 				  <tbody>
 				  <?php if ($customers->num_rows > 0): ?>
 				  <?php while ($customer = $customers->fetch_assoc()): ?>
-					<tr>
+					<tr
+					<?php if (! empty($customer['blocked_by'])): ?>
+						class="danger"
+					<?php endif; ?>
+					>
 						<td><?=$customer['id_customer']?></td>
 						<td><?=($customer['first_name']." ".$customer['last_name'])?></td>
 						<td><?=$customer['email']?></td>
 						<td><?=$customer['school']?></td>
 						<td><?=$customer['degree']?></td>
 						<td><?=$customer['major']?></td>
+
+						<?php if (! empty($customer['blocked_by'])): ?>
+						<td>No</td>
+						<?php else: ?>
+						<td>Yes</td>
+						<?php endif; ?>
+						
 						<td><a class="btn btn-primary" href="<?=Helper::url('/alumni/'.$customer['id_customer'])?>">View</a></td>
 					</tr>
 					<?php endwhile; ?>
