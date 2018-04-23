@@ -96,6 +96,7 @@ $app->group('/api/v1/', function () {
 	
 	$this->group('customer/{id}/work', function () {
 		$this->post('', \Api\CustomerWorkController::class . ':create');
+		$this->get('/{id_work}/delete', \Api\CustomerWorkController::class . ':delete');
 	});
 	
 	$this->group('customer/{id}/note', function () {

@@ -483,7 +483,7 @@ class CustomerController
 				$work_zipcode = $row[$h['WORK_ZIP_CODE']];
 				$work_phonenumber = $row[$h['WORK_PHONE_NUMBER']];
 
-				$sql = "INSERT INTO customer_work (title, address_line1, address_line2, city, state, country, zipcode, field, customer_id, date_start, date_end) VALUES ('$work_title', '$work_street_1', '$work_street_2', '$work_city', '$work_state_code', '$work_country', '$work_zipcode', '', '$customer_id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+				$sql = "INSERT INTO customer_work (title, address_line1, address_line2, city, state, country, zipcode, field, customer_id, date_start, date_end) VALUES ('$work_company_name_1', '$work_street_1', '$work_street_2', '$work_city', '$work_state_code', '$work_country', '$work_zipcode', '', '$customer_id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
 				
 				$res = $this->app->db->query($sql);
 				if ($res['status'] == "failure") {

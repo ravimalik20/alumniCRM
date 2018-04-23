@@ -103,6 +103,47 @@ class CustomerWorkController
 		}
     }
     
+	public function delete($request, $response, $args)
+	{
+		$id = $args['id'];
+		
+		$sql = "SELECT * FROM customer where id_customer = $id";
+		$obj = $this->app->db->query($sql);
+		
+		if ($obj->num_rows <= 0) {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Customer does not exist.")
+			);
+			
+			return $response->withJson($result, 200);
+		}
+
+		$id_work = $args['id_work'];
+		
+		$sql = "SELECT * FROM customer_work where id = $id_work";
+		$obj = $this->app->db->query($sql);
+		
+		if ($obj->num_rows <= 0) {
+			$result = array(
+				"status" => "failure",
+				"errors" => array("Work position does not exist.")
+			);
+			
+			return $response->withJson($result, 200);
+		}
+
+		$sql = $this->app->db->query("delete from customer_work where id = $id_work");
+		$status = $this->app->db->query($sql);
+
+		$result = array(
+			"status" => "success",
+			"redirect_url" => \Helper::url('/alumni/'.$id)
+		);
+		
+		return $response->withJson($result, 200);
+	}
+
     private function test_input($data)
     {
 		$data = trim($data);

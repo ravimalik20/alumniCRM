@@ -257,6 +257,9 @@
 											
 											<?php while($work = $works->fetch_assoc()): ?>
 												<li class="list-group-item">
+													<span class="pull-right">
+														<a class="btn btn-danger async_reload" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/work/".$work['id'])."/delete"?>"><i class="fa fa-trash"></i></a>
+													</span>
 													 <h4 class="list-group-item-heading"><?=$work['title']?></h4>
 													 <p class="list-group-item-text"><?=$work['date_end']?> - <?=$work['date_start']?></p>
 												</li>
