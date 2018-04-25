@@ -37,15 +37,17 @@ class EmailController
 			$customer = $customer->fetch_assoc();
 			$customer_id = $customer['id_customer'];
 		
+			$user_id = Helper::user_id($this->app);
+
 			mail($to, $subject, $message);
 		
-			$this->app->db->query("INSERT INTO email (customer_id, user_id, subject, content) VALUES ('$customer_id', '1', '$subject', '$message')");
+			$this->app->db->query("INSERT INTO email (customer_id, user_id, subject, content) VALUES ('$customer_id', $user_id, '$subject', '$message')");
 		}
 		else {
 			return $response->withRedirect(Helper::url("/email/compose"));
 		}
       
-		return $response->withRedirect(Helper::url("/email"));
+		return $response->withRedirect(Helper::url("/email?success=true"));
     }
     
     public function compose($request, $response, $args)

@@ -64,10 +64,13 @@
 				<?php else:?>
 					<a class="btn btn-lg btn-danger pull-right async_reload" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/nocontact/add'?>"><i class="fa fa-plus"></i> Add to no contact list</a>
 				<?php endif; ?>
+
+					<a class="btn btn-lg btn-primary pull-right" href="<?=Helper::url('/email/compose?to='.$customer['email'])?>" style="margin-right:1%;"><i class="fa fa-envelope"></i> Mail</a>
+
 				</div>
 			</div>
     
-			<div class="row">
+			<div class="row" id="base_info">
 				<div class="col-lg-12">
 					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>" method="POST">
 						<div class="panel panel-default">
@@ -144,7 +147,7 @@
 										</div>
 										<div class="form-group">
 											<label>Zipcode *</label>
-											<input type="text" class="form-control" id="zipcode" name="zipcode"
+											<input type="text" class="form-control" id="zipcode" name="zipcode" data-mask="99999"
 												value = "<?=$customer_latest['zipcode'] ?>"
 											/>
 										</div>
@@ -239,7 +242,7 @@
 						</div> <!-- base info -->
 					</form>
 					
-					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/work' ?>" method="POST">
+					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/work' ?>" method="POST" id="work">
 						<div class="panel panel-default">
 							<div class="panel-heading">Work Info</div>
 							
@@ -352,7 +355,7 @@
 							
 							<div class="panel-body">
 
-								<div class="row">
+								<div class="row" id="notes">
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label>New Note *</label>
@@ -367,7 +370,7 @@
 									</div>
 									
 									<div class="col-lg-6">
-										<div class="form-group">
+										<div class="form-group table-responsive">
 											<label>Previous Notes</label>
 											<table class="table table-striped" id="data_table">
 											  <thead>
@@ -386,7 +389,7 @@
 														<td><?=$note['note']?></td>
 														<td><?=$note['admin_name']?></td>
 														<td><a href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/note/".$note['id_note'])."/delete"?>" class="btn btn-danger async_reload"><i class="fa fa-trash"></i></a>
-														<a href="#" class="btn btn-primary async_reload"><i class="fa fa-edit"></i></a></td>
+														</td>
 													</tr>
 												<?php endwhile; ?>
 												<?php endif; ?>
@@ -402,7 +405,7 @@
 				</div>
 			</div>
         
-			<div class="row">
+			<div class="row" id="uat">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">User access token</div>
@@ -430,8 +433,8 @@
     
 	<div class="modal fade" tabindex="-1" role="dialog" id="error_modal">
 	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
+		<div class="modal-content panel-danger">
+		  <div class="modal-header panel-heading">
 		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		    <h4 class="modal-title">Error</h4>
 		  </div>
@@ -443,9 +446,18 @@
 				</div>
 			</div>
 		  </div>
-		  <div class="modal-footer">
-		    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="success_modal">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content panel-success">
+		  <div class="modal-header panel-heading">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    <h4 class="modal-title">Success</h4>
 		  </div>
+			
 		</div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
