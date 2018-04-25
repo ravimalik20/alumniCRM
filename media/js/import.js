@@ -8,7 +8,7 @@ $(document).ready(function () {
 				window.location = "/alumni";
 			}
 			else	
-				alert("Incorrect data.");
+				$("#error_modal").modal("show");
 		});
 	
 		return false;

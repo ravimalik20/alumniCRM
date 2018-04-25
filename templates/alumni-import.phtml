@@ -66,11 +66,14 @@
 					});
 
 					this.on("success", function (val) {
-						console.log(val);
+						$("#success_modal").modal("show");
 					});
 
 					this.on("error", function (val, error) {
-						alert(error);
+						$("#errors_list").html("");
+						$("#errors_list").append("<li>"+error+"</li>");
+
+						$("#error_modal").modal("show");
 					});
 				},
 				acceptedFiles: ".csv"
@@ -127,5 +130,11 @@
       </div>
     </div>
     
+	<!-- Success Modal -->
+	<?php include "components/success-modal.php"; ?>
+
+	<!-- Error Modal -->
+	<?php include "components/error-modal.php"; ?>
+
   </body>
 </html>

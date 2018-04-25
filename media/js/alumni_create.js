@@ -5,9 +5,12 @@ $(document).ready(function () {
 	
 		$.post(url, data, function (val) {
 			if (val.status == "success") {
-				var redirect_url = val.redirect_url;
+				$('#success_modal').modal('show');
 
-				window.location = redirect_url;
+				setTimeout(function () {
+					var redirect_url = val.redirect_url;
+					window.location = redirect_url;
+				}, 2000);
 			}
 			else {
 				$("#errors_list").html("");
@@ -16,7 +19,7 @@ $(document).ready(function () {
 					$("#errors_list").append("<li>"+val.errors[i]+"</li>");
 				}
 
-				$('#error_modal').modal('toggle');
+				$('#error_modal').modal('show');
 			}
 		});
 	
