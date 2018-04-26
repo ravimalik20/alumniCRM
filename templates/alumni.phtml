@@ -35,15 +35,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-	<style>
-		#cover {
-			background: url("<?=Helper::url('/media/spinner.gif')?>") no-repeat scroll center center #FFF;
-			position: absolute;
-			height: 100%;
-			width: 100%;
-		}
-	</style>
-
     <script>
 		$(document).ready(function() {
 			$('#data_table').DataTable({
@@ -59,7 +50,8 @@
 
   <body>
 
-	<div id="cover"></div>
+	<!-- Page load spinner -->
+    <?php include "components/spinner.php"; ?>
 
     <!-- Top menu -->
     <?php include "components/top-menu.php"; ?>
