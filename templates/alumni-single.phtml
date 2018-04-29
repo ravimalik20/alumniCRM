@@ -242,7 +242,7 @@
 						</div> <!-- base info -->
 					</form>
 					
-					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/work' ?>" method="POST" id="work">
+					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']).'/work' ?>" method="POST" id="work_form">
 						<div class="panel panel-default">
 							<div class="panel-heading">Work Info</div>
 							
@@ -250,27 +250,35 @@
 							
 								<div class="row">
 
-									<?php if ($works->num_rows > 0): ?>
+									
 									<div class="col-lg-12">
 										<div class="form-group">
 											<h4>Work positions</h4>
 										</div>
 										
-										<ul class="list-group">
-											
+										<table class="table table-striped" id="data_table_work">
+											<thead>
+												<th>Duration</th>
+												<th>Position</th>
+												<th>Action</th>
+											</thead>
+											<tbody>
+											<?php if ($works->num_rows > 0): ?>
 											<?php while($work = $works->fetch_assoc()): ?>
-												<li class="list-group-item">
-													<span class="pull-right">
+												<tr>
+													<td><?=$work['date_end']?> - <?=$work['date_start']?></td>
+													<td><?=$work['title']?></td>
+													<td>
 														<a class="btn btn-danger delete_work" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/work/".$work['id'])."/delete"?>"><i class="fa fa-trash"></i></a>
-													</span>
-													 <h4 class="list-group-item-heading"><?=$work['title']?></h4>
-													 <p class="list-group-item-text"><?=$work['date_end']?> - <?=$work['date_start']?></p>
-												</li>
+													</td>
+												</tr>
 											<?php endwhile; ?>	
-											
-										</ul>
+											<?php endif; ?>
+											</tbody>
+										</table>
+										
 									</div>
-									<?php endif; ?>
+									
 
 									<div class="col-lg-12">
 										<div class="form-group">

@@ -86,8 +86,15 @@ class CustomerWorkController
 
 		$status = $this->app->db->query($sql);
 		if ($status) {
+			$id_work = $this->app->db->insert_id;
+
+			$work = $this->app->db->query("select * from customer_work where id = $id_work");
+			$work = $work->fetch_assoc();
+
 			$result = array(
 				"status" => "success",
+				"data" => $work,
+				"delete_url" => \Helper::url("/api/v1/customer/$id/work/$id_work/delete"),
 				"redirect_url" => \Helper::url('/alumni/'.$id)
 			);
 			
