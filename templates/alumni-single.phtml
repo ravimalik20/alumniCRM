@@ -261,7 +261,7 @@
 											<?php while($work = $works->fetch_assoc()): ?>
 												<li class="list-group-item">
 													<span class="pull-right">
-														<a class="btn btn-danger async_reload" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/work/".$work['id'])."/delete"?>"><i class="fa fa-trash"></i></a>
+														<a class="btn btn-danger delete_work" href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/work/".$work['id'])."/delete"?>"><i class="fa fa-trash"></i></a>
 													</span>
 													 <h4 class="list-group-item-heading"><?=$work['title']?></h4>
 													 <p class="list-group-item-text"><?=$work['date_end']?> - <?=$work['date_start']?></p>
@@ -349,7 +349,7 @@
 					</form>
 
 					
-					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>/note" method="POST">
+					<form action="<?=Helper::url('/api/v1/customer/'.$customer['id_customer'])?>/note" method="POST" id="add_note">
 						<div class="panel panel-default">
 							<div class="panel-heading">Notes</div>
 							
@@ -372,7 +372,7 @@
 									<div class="col-lg-6">
 										<div class="form-group table-responsive">
 											<label>Previous Notes</label>
-											<table class="table table-striped" id="data_table">
+											<table class="table table-striped" id="data_table_notes">
 											  <thead>
 												<tr>
 													<th>Created at</th>
@@ -388,7 +388,7 @@
 														<td><?=$note['created_at']?></td>
 														<td><?=$note['note']?></td>
 														<td><?=$note['admin_name']?></td>
-														<td><a href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/note/".$note['id_note'])."/delete"?>" class="btn btn-danger async_reload"><i class="fa fa-trash"></i></a>
+														<td><a href="<?=Helper::url('/api/v1/customer/'.$customer['id_customer']."/note/".$note['id_note'])."/delete"?>" class="btn btn-danger delete_note"><i class="fa fa-trash"></i></a>
 														</td>
 													</tr>
 												<?php endwhile; ?>

@@ -73,8 +73,18 @@ class NoteController
 		$sql = "INSERT INTO notes (customer_id, user_id, note) VALUES ('$customer_id', '$user_id', '$note')";
 		$status = $this->app->db->query($sql);
 		if ($status) {
+			$ins_id = $this->app->db->insert_id;
+
+			$note = $this->app->db->query("select * from notes where customer_id = $customer_id order by id_note desc");
+			$note = $note->fetch_assoc();
+
+			$created_by = \Helper::user($this->app)['name'];
+
 			$result = array(
 				"status" => "success",
+				"data" => $note,
+				"created_by" => $created_by,
+				"delete_url" => \Helper::url("/api/v1/customer/$customer_id/note/$ins_id/delete"),
 				"redirect_url" => \Helper::url('/alumni/'.$id)
 			);
 			
