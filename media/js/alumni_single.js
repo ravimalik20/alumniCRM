@@ -37,7 +37,7 @@ $(document).ready(function () {
 	
 		$.post(url, data, function (val) {
 			if (val.status == "success") {
-				
+				$("#token_field").val(val.token);
 			}
 			else {
 				$("#errors_list").html("");

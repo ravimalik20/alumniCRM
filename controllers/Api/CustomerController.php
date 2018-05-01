@@ -403,8 +403,12 @@ class CustomerController
 		$sql = "UPDATE customer SET token = '$t' where id_customer = $id";
 		$status = $this->app->db->query($sql);
 		if ($status) {
+			$cust = $this->app->db->query("select * from customer where id_customer = $id");
+			$cust = $cust->fetch_assoc();
+
 			$result = array(
 				"status" => "success",
+				"token" => $cust['token'],
 				"redirect_url" => \Helper::url('/alumni/'.$id)
 			);
 			
