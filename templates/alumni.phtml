@@ -38,10 +38,23 @@
     <script>
 		$(document).ready(function() {
 			$('#data_table').DataTable({
-				"order": [0, 'desc'],
+				"order": [1, 'desc'],
 				"initComplete": function (settings, json) {
 					$('#cover').fadeOut(1000);
 				}
+			});
+			
+			$(".email").click(function () {
+				var href = $(this).attr('href');
+			
+				var emails = [];
+				$('input[name=emails]:checked').each(function() {
+					emails.push($(this).val());
+				});
+			
+				window.location.href = (href + "?to=" + emails.join(','));
+				
+				return false;
 			});
 		} );
     </script>
@@ -66,8 +79,9 @@
           <h1 class="page-header">Alumni Section</h1>
           
           <div class="row" style="margin-bottom:2%;">
-			<div class="col-lg-12">
+			<div class="col-lg-12">				
 				<a class="btn btn-default btn-lg pull-right" href="<?=Helper::url('/alumni/create')?>">Create <i class="fa fa-plus"></i></a>
+				<a class="btn btn-default btn-lg pull-right email" style="margin-right:1%;" href="<?=Helper::url('/email/compose')?>">Email <i class="fa fa-envelope"></i></a>
 			</div>
           </div>
           
@@ -77,6 +91,7 @@
 				<table class="table table-striped" id="data_table">
 				  <thead>
 					<tr>
+						<th>  </th>
 						<th>ID</th>
 						<th>Name</th>
 						<th>Email</th>
@@ -95,6 +110,7 @@
 						class="danger"
 					<?php endif; ?>
 					>
+						<td><input type="checkbox" name="emails" value="<?=$customer['email']?>"></td>
 						<td><?=$customer['id_customer']?></td>
 						<td><?=($customer['first_name']." ".$customer['last_name'])?></td>
 						<td><?=$customer['email']?></td>

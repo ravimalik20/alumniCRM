@@ -33,6 +33,28 @@ $(document).ready(function () {
 		return false;
 	});
 	
+	$("#user_token_form").submit(function () {
+		var data = $(this).serializeArray();
+		var url = $(this).attr("action");
+	
+		$.post(url, data, function (val) {
+			if (val.status == "success") {
+				$("#token_field").
+			}
+			else {
+				$("#errors_list").html("");
+
+				for (i = 0 ; i < val.errors.length ; i++) {
+					$("#errors_list").append("<li>"+val.errors[i]+"</li>");
+				}
+
+				$('#error_modal').modal('show');
+			}
+		});
+	
+		return false;
+	});
+	
 	$("#work_form").submit(function () {
 		var data = $(this).serializeArray();
 		var url = $(this).attr("action");

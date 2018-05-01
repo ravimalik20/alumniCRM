@@ -28,25 +28,25 @@ class EmailController
       
 		$data = $request->getParsedBody();
 		
-		$to = $this->test_input($data['to']);
-		$subject = $this->test_input($data['subject']);
-		$message = $this->test_input($data['message']);
-      
-		$customer = $this->app->db->query("select * from customer where email='$to'");
-		if ($customer->num_rows > 0) {
-			$customer = $customer->fetch_assoc();
-			$customer_id = $customer['id_customer'];
-		
-			$user_id = Helper::user_id($this->app);
+		$recepients = explode(",", $this->test_input($data['to']));
 
-			mail($to, $subject, $message);
+		foreach ($recepients as $to) {
+			$subject = $this->test_input($data['subject']);
+			$message = $this->test_input($data['message']);
+		  
+			$customer = $this->app->db->query("select * from customer where email='$to'");
+			if ($customer->num_rows > 0) {
+				$customer = $customer->fetch_assoc();
+				$customer_id = $customer['id_customer'];
 		
-			$this->app->db->query("INSERT INTO email (customer_id, user_id, subject, content) VALUES ('$customer_id', $user_id, '$subject', '$message')");
+				$user_id = Helper::user_id($this->app);
+
+				mail($to, $subject, $message);
+		
+				$this->app->db->query("INSERT INTO email (customer_id, user_id, subject, content) VALUES ('$customer_id', $user_id, '$subject', '$message')");
+			}
 		}
-		else {
-			return $response->withRedirect(Helper::url("/email/compose"));
-		}
-      
+
 		return $response->withRedirect(Helper::url("/email?success=true"));
     }
     
