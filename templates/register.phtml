@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>AlumniCRM - Login</title>
+    <title>AlumniCRM - Dashboard</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -19,7 +17,15 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <link href="<?=Helper::url('/media/css/login.css')?>" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+	<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+    <link href="<?=Helper::url('/media/css/dashboard.css')?>" rel="stylesheet" />
 
 	<script src="<?=Helper::url('/media/js/global.js')?>"></script>
 
@@ -49,48 +55,73 @@
 
   <body>
 
-    <div class="container">
-        <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-        	<div class="panel panel-default">
-        		<div class="panel-heading">
-			    		<h3 class="panel-title">Create a new administrator account.</h3>
-			 			</div>
-			 			<div class="panel-body">
-			    		<form role="form" action="<?=Helper::url('/api/v1/register')?>" method="POST">
-			    			<div class="row">
-			    				<div class="col-xs-12 col-sm-12 col-md-12">
-			    					<div class="form-group">
-										<input type="text" name="name" id="name" class="form-control input-sm" placeholder="Name" required>
-			    					</div>
-			    				</div>
-			    			</div>
+	<!-- Top menu -->
+    <?php include "components/top-menu.php"; ?>
 
-			    			<div class="form-group">
-			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address" required>
-			    			</div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+			<!-- LHS Menu -->
+			<ul class="nav nav-sidebar">
+				<li class="active"><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
+				<li><a href="<?=Helper::url('/alumni/import')?>">Import / Export</a></li>
+				<li><a href="<?=Helper::url('/email')?>">Email</a></li>
+			</ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          
+          
+          <!-- Content goes here -->
+          <div class="row centered-form">
+			<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+							<h3 class="panel-title">Create a new administrator account.</h3>
+							</div>
+							<div class="panel-body">
+							<form role="form" action="<?=Helper::url('/api/v1/register')?>" method="POST">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="form-group">
+											<input type="text" name="name" id="name" class="form-control input-sm" placeholder="Name" required>
+										</div>
+									</div>
+								</div>
 
-			    			<div class="row">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" required>
-			    					</div>
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						<input type="password" name="password_re" id="password_re" class="form-control input-sm" placeholder="Confirm Password" required>
-			    					</div>
-			    				</div>
-			    			</div>
-			    			
-			    			<input type="submit" value="Register" class="btn btn-info btn-block">
-			    		
-			    		</form>
-			    	</div>
-	    		</div>
-    		</div>
-    	</div>
-    </div> <!-- /container -->
+								<div class="form-group">
+									<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" required>
+										</div>
+									</div>
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<input type="password" name="password_re" id="password_re" class="form-control input-sm" placeholder="Confirm Password" required>
+										</div>
+									</div>
+								</div>
+								
+								<input type="submit" value="Register" class="btn btn-info btn-block">
+							
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+          
+        </div>
+      </div>
+    </div>
+    
+	<!-- Success Modal -->
+	<?php include "components/success-modal.php"; ?>
+
+	<!-- Error Modal -->
+	<?php include "components/error-modal.php"; ?>
     
   </body>
 </html>

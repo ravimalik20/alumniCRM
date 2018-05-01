@@ -16,7 +16,10 @@ class AuthController
     }
     
     public function register($request, $response, $args)
-    {      
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect(Helper::url("/auth/login"));
+      
 		$response = $this->app->view->render($response, 'register.phtml');
 
 		return $response;
