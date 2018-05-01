@@ -43,34 +43,34 @@ class CustomerWorkController
 		$errors = array();
 		
 		if (empty($title))
-			array_push($errors, "title must not be empty");
+			array_push($errors, array("title", "title must not be empty"));
 		
 		if (empty($address_line1))
-			array_push($errors, "address_line1 must not be empty");
+			array_push($errors, array("address_line1", "address_line1 must not be empty"));
 			
 		if (empty($address_line2))
-			array_push($errors, "address_line2 must not be empty");
+			array_push($errors, array("address_line2", "address_line2 must not be empty"));
 		
 		if (empty($country))
-			array_push($errors, "country must not be empty");
+			array_push($errors, array("country", "country must not be empty"));
 		
 		if (empty($state))
-			array_push($errors, "state must not be empty");
+			array_push($errors, array("state", "state must not be empty"));
 		
 		if (empty($city))
-			array_push($errors, "city must not be empty");
+			array_push($errors, array("city", "city must not be empty"));
 			
 		if (empty($city))
-			array_push($errors, "field must not be empty");
+			array_push($errors, array("field", "field must not be empty"));
 		
 		if(!preg_match("/^[0-9]{5}$/i", $zipcode))
-			array_push($errors, "Zipcode format incorrect.");
+			array_push($errors, array("zipcode", "Zipcode format incorrect."));
 			
 		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_start))
-			array_push($errors, "Birthday format should be YYYY-MM-DD");
+			array_push($errors, array("date_start", "Date Start format should be YYYY-MM-DD"));
 			
 		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_end))
-			array_push($errors, "Birthday format should be YYYY-MM-DD");
+			array_push($errors, array("date_end", "Date End format should be YYYY-MM-DD"));
 			
 		if (count($errors) > 0) {
 			$result = array(

@@ -58,6 +58,9 @@ $(document).ready(function () {
 		var url = $(this).attr("action");
 	
 		$.post(url, data, function (val) {
+			$("div.form-group").removeClass("has-error");
+			$("span.help-block").hide();
+		
 			if (val.status == "success") {
 				table_work.row.add([
 					val.data.date_end + " - " + val.data.date_end,
@@ -70,13 +73,13 @@ $(document).ready(function () {
 				}, 'slow');
 			}
 			else {
-				$("#errors_list").html("");
-
-				for (i = 0 ; i < val.errors.length ; i++) {
-					$("#errors_list").append("<li>"+val.errors[i]+"</li>");
+				for (e in val.errors) {
+					error = val.errors[e];
+					
+					$("input[name="+error[0]+"]").parent("div.form-group").addClass("has-error");
+					$("input[name="+error[0]+"]").parent("div.form-group").find("span.help-block").html(error[1]);
+					$("input[name="+error[0]+"]").parent("div.form-group").find("span.help-block").show();
 				}
-
-				$('#error_modal').modal('show');
 			}
 		});
 	
