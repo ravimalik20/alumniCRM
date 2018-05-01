@@ -247,10 +247,18 @@ class CustomerController
 		if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 			$f = fopen($uploadedFile->file, "r");
 		
-			$this->importCSV($f, $response);
-		
+			$errors = $this->importCSV($f, $response);
 			fclose($f);
 		
+			if (count($errors) > 0) {
+				$result = array(
+					"status" => "failure",
+					"errors" => $errors
+				);
+			
+				return $response->withJson($result, 200);
+			}
+
 			$result = array(
 				"status" => "success"
 			);
@@ -418,6 +426,33 @@ class CustomerController
 		$h = $this->prepareHeader($header);
 		
 		$errors = array();
+
+		$csv_header_fields = array(
+			"ID_NUMBER", "RECORD_TYPE", "PREF_ADDR_TYPE_CODE", "PREF_TELEPHONE_TYPE_CODE",
+			"PREF_MAIL_NAME", "PREF_NAME_SORT", "RECORD_STATUS", "SALUTATION",
+			"JNT_SALUTATION", "PREF_JNT_MAIL_NAME1", "PREF_JNT_MAIL_NAME2",
+			"FIRST_NAME", "LAST_NAME", "HOME_STREET1", "HOME_STREET2", "HOME_STREET3",
+			"HOME_FOREIGN_CITYZIP", "HOME_COUNTRY", "HOME_CITY", "HOME_STATE_CODE",
+			"HOME_ZIP_CODE", "HOME_PHONE_NUMBER", "MOBILE_PHONE_NUMBER", "ACTIVE_SEASONAL_ADDR_IND",
+			"WORK_TITLE", "WORK_COMPANY_NAME1", "WORK_COMPANY_NAME2", "WORK_STREET1",
+			"WORK_STREET2", "WORK_STREET3", "WORK_FOREIGN_CITYZIP", "WORK_COUNTRY",
+			"WORK_CITY", "WORK_STATE_CODE", "WORK_ZIP_CODE", "WORK_PHONE_NUMBER",
+			"SCHOOL1", "DEGREE_CODE1", "DEGREE_YEAR1", "MAJOR1", "SCHOOL2", "DEGREE_CODE2",
+			"DEGREE_YEAR2", "MAJOR2", "SCHOOL3", "DEGREE_CODE3", "DEGREE_YEAR3", "MAJOR3",
+			"EMAIL_ADDRESS", "GENDER_CODE", "BIRTH_MONTH", "AGE", "LIFE_MEMBER",
+			"ENGAGEMENT_SCORE", "ENTHUSIASM_SCORE", "RETIRED_IND"
+		);
+
+		foreach ($csv_header_fields as $field) {
+			if (!array_key_exists($field, $h)) {
+				array_push($errors, "Invalid CSV format. Please download the correct CSV format.");
+				break;
+			}
+		}
+
+		if (count($errors) > 0)
+			return $errors;
+
 		$row_num = 0;
 
 		while (($row = fgetcsv($file)) !== FALSE ) {
@@ -496,7 +531,7 @@ class CustomerController
 			}
 		}
 
-		print_r($errors); die;
+		return $errors;
     }
     
     private function prepareHeader($row)

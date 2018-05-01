@@ -65,8 +65,18 @@
 						$('#cover').fadeOut(1000);
 					});
 
-					this.on("success", function (val) {
-						$("#success_modal").modal("show");
+					this.on("success", function (val, response) {
+						console.log(response);
+					
+						if (response.status == "failure") {
+							$("#errors_list").html("");
+							$("#errors_list").append("<li>"+response.errors[0]+"</li>");
+
+							$("#error_modal").modal("show");
+						}
+						else {
+							$("#success_modal").modal("show");
+						}
 					});
 
 					this.on("error", function (val, error) {
