@@ -108,37 +108,37 @@ class CustomerController
 		$errors = array();
 
 		if (empty($first_name))
-			array_push($errors, "first_name must not be empty");
+			array_push($errors, array("first_name", "first_name must not be empty"));
 			
 		if (empty($last_name))
-			array_push($errors, "last_name must not be empty");
+			array_push($errors, array("last_name" , "last_name must not be empty"));
 
 		if (empty($preferred_mail_name))
-			array_push($errors, "preferred_mail_name must not be empty");
+			array_push($errors, array("preferred_mail_name" , "preferred_mail_name must not be empty"));
 		
 		if (empty($salutation))
-			array_push($errors, "salutation must not be empty");
+			array_push($errors, array("salutation" , "salutation must not be empty"));
 		
 		if (empty($home_street_1))
-			array_push($errors, "home_street_1 must not be empty");
+			array_push($errors, array("home_street_1" , "home_street_1 must not be empty"));
 		
 		if (empty($country))
-			array_push($errors, "country must not be empty");
+			array_push($errors, array("country" , "country must not be empty"));
 		
 		if (empty($state))
-			array_push($errors, "state must not be empty");
+			array_push($errors, array("state" , "state must not be empty"));
 		
 		if (empty($city))
-			array_push($errors, "city must not be empty");
+			array_push($errors, array("city" , "city must not be empty"));
 		
 		if (empty($school))
-			array_push($errors, "school must not be empty");
+			array_push($errors, array("school" , "school must not be empty"));
 		
 		if (empty($degree))
-			array_push($errors, "degree must not be empty");
+			array_push($errors, array("degree" , "degree must not be empty"));
 		
 		if (empty($major))
-			array_push($errors, "major must not be empty");
+			array_push($errors, array("major" , "major must not be empty"));
 
 		$valid = false;
 		foreach (array('current', 'alumni') as $val) {
@@ -151,16 +151,16 @@ class CustomerController
 		$active = $active ? 1 : 0;
 			
 		if(!preg_match("/^[0-9]{5}$/i", $zipcode))
-			array_push($errors, "Zipcode format incorrect.");
+			array_push($errors, array("zipcode" , "Zipcode format incorrect."));
 		
 		if (!preg_match("/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/", $email))
-			array_push($errors, "Email format incorrect.");
+			array_push($errors, array("email" , "Email format incorrect."));
 		
 		if(!empty($home_number) && !preg_match("/^[1-9][0-9]{9}$/", $home_number))
-			array_push($errors, "Home number format incorrect.");
+			array_push($errors, array("home_number" , "Home number format incorrect."));
 			
 		if(!preg_match("/^[1-9][0-9]{9}$/", $phone_number))
-			array_push($errors, "Phone number format incorrect.");
+			array_push($errors, array("phone_number" , "Phone number format incorrect."));
 		
 		$valid = false;
 		foreach (array('male', 'female', 'other') as $val) {
@@ -168,19 +168,19 @@ class CustomerController
 				$valid = true;
 		}
 		if (!$valid)
-			array_push($errors, "Gender must be either 'male', 'female' or 'other'");
+			array_push($errors, array("gender" , "Gender must be either 'male', 'female' or 'other'"));
 		
 		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $birthday))
-			array_push($errors, "Birthday format should be YYYY-MM-DD");
+			array_push($errors, array("birthday" , "Birthday format should be YYYY-MM-DD"));
 			
 		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $major_year_start))
-			array_push($errors, "major_year_start format should be YYYY-MM-DD");
+			array_push($errors, array("major_year_start" , "major_year_start format should be YYYY-MM-DD"));
 		
 		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $major_year_end))
-			array_push($errors, "major_year_end format should be YYYY-MM-DD");
+			array_push($errors, array("major_year_end" , "major_year_end format should be YYYY-MM-DD"));
 		
 		if ($major_year_end <= $major_year_start) {
-			array_push($errors, "major_year_end should be greater than major_year_start");
+			array_push($errors, array("major_year_end" , "major_year_end should be greater than major_year_start"));
 		}
 
 		/* Increment version number on update. */
