@@ -76,6 +76,7 @@ $app->group('/email', function () {
 	$this->get('', EmailController::class . ':_list');
 	$this->post('', EmailController::class . ':send');
 	$this->get('/compose', EmailController::class . ':compose');
+	$this->get('/token/{id}', EmailController::class . ':email_token');
 	$this->get('/{id}', EmailController::class . ':view');
 });
 

@@ -60,6 +60,29 @@ class EmailController
 		return $response;
     }
     
+	public function email_token($request, $response, $args)
+    {
+		if (! Helper::is_login())
+			return $response->withRedirect(Helper::url("/auth/login"));
+      
+		$id = $args['id'];
+		$customer = $this->app->db->query("select * from customer where id_customer = $id");
+
+		if ($customer->num_rows <= 0) {
+			$response = $this->app->view->render($response, 'email-compose.phtml');
+		}
+		else {
+			$customer = $customer->fetch_assoc();
+
+			$to = $customer['email'];
+			$token = $customer['token'];
+
+			$response = $this->app->view->render($response, 'email-token.phtml', ["to" => $to, "token" => $token]);
+		}
+      
+		return $response;
+    }
+
     public function view($request, $response, $args)
     {
 		if (! Helper::is_login())

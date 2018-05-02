@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AlumniCRM - Dashboard</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+	<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+    <link href="<?=Helper::url('/media/css/dashboard.css')?>" rel="stylesheet" />
+
+	<script src="<?=Helper::url('/media/js/global.js')?>"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script>
+		$(document).ready(function() {
+			$('#data_table').DataTable();
+		} );
+    </script>
+    
+  </head>
+
+  <body>
+
+    <!-- Top menu -->
+    <?php include "components/top-menu.php"; ?>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+			<!-- LHS Menu -->
+			<ul class="nav nav-sidebar">
+				<li><a href="<?=Helper::url('/alumni')?>">Alumni</a></li>
+				<li><a href="<?=Helper::url('/alumni/import')?>">Import / Export</a></li>
+				<li class="active"><a href="<?=Helper::url('/email')?>">Email</a></li>
+			</ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Compose</h1>
+          
+          <!-- Content goes here -->
+          <div class="row">
+			<div class="col-lg-12">
+				<form action="<?=Helper::url('/email')?>" method="POST">
+					<div class="form-group">
+						<input type="text" name="to" class="form-control" placeholder="To" required readonly
+							value="<?=$to?>"
+						/>
+					</div>
+					<div class="form-group">
+						<input type="text" name="subject" class="form-control" placeholder="Subject" required 
+							value="Access your University at Buffalo AlumniCRM account"
+						/>
+					</div>
+					<div class="form-group">
+						<textarea name="message" class="form-control" rows="9" required >Hello,
+
+Here is the link to access your University at Buffalo AlumniCRM account.
+
+<?=Helper::url("/alumni/update/$token")?>
+
+
+You can update your account using this link. It is a one time use link which will expire once you update your account details.						
+						</textarea>
+					</div>
+					
+					<button type="submit" class="btn btn-primary">Send</button>
+				</form>
+			</div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+	<!-- Success Modal -->
+	<?php include "components/success-modal.php"; ?>
+
+	<!-- Error Modal -->
+	<?php include "components/error-modal.php"; ?>
+
+  </body>
+</html>
